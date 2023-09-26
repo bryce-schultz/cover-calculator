@@ -1,0 +1,39 @@
+.cover-info-wrapper
+{
+    margin-top: 10px;
+}
+
+.padded-cover-info
+{
+    display: flex;
+    flex-direction: row;
+
+    justify-content: space-between;
+
+    padding: 10px;
+
+    border: solid 1px var(--background-tertiary);
+    border-radius: 4px;
+}
+
+.date-wrapper
+{
+    display: flex;
+    align-items: center;
+}
+
+.button-wrapper
+{
+    display: flex;
+    align-items: center;
+}
+
+.formatted-info-wrapper
+{
+    display: flex;
+    align-items: center;
+
+    margin: 0px 10px 0px 10px;
+
+    flex-grow: 1;
+}
