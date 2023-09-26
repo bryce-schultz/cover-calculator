@@ -1,0 +1,4 @@
+function getCustomer(id)
+{
+    
+}

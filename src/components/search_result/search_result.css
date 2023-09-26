@@ -1,0 +1,73 @@
+.list-item
+{
+    display: flex;
+
+    list-style: none;
+    padding: 20px 10px 20px 10px;
+    margin: 0px 10px 10px 10px;
+
+    background-color: var(--background-primary);
+
+    border-radius: 4px;
+
+    color: var(--text-muted);
+}
+
+.list-item:first-child
+{
+    margin: 10px;
+}
+
+.list-content-wrapper
+{
+    display: flex;
+    flex-direction: column;
+
+    width: 100%;
+}
+
+.cover-section
+{
+    display: flex;
+    flex-direction: column;
+}
+
+.user-section
+{
+    display: flex;
+
+    width: 100%;
+    
+    justify-content: space-between;
+    align-items: center;
+}
+
+.icon-info
+{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.icon-info svg
+{
+    margin-right: 5px;
+}
+
+.user-info-section
+{
+    flex-grow: 1;
+}
+
+.location-info-section
+{
+    flex-grow: 4;
+}
+
+.info-section
+{
+    display: flex;
+    flex-direction: column;
+
+    height: 100%;
+}
