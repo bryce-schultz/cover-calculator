@@ -1,0 +1,57 @@
+.color-picker-container
+{
+    user-select: none;
+}
+
+.color-picker-color
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 1rem;
+    color: var(--text-normal);
+    background-color: var(--background-secondary);
+    cursor: pointer;
+}
+
+.color-picker-color:hover
+{
+    filter: brightness(1.20);
+}
+
+.color-picker-color.active
+{
+    box-shadow: inset 0px 0px 0px 5px rgba(0, 0, 0, 0.2);
+}
+
+.mineral
+{
+    background-color: var(--color-mineral);
+}
+
+.dove
+{
+    background-color: var(--color-dove);
+}
+
+.cinnamon
+{
+    background-color: var(--color-cinnamon);
+}
+
+.mink
+{
+    background-color: var(--color-mink);
+}
+
+.forest
+{
+    background-color: var(--color-forest);
+}
+
+.custom
+{
+    cursor: default;
+    background-color: var(--color-custom);
+}

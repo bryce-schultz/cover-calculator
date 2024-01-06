@@ -1,0 +1,65 @@
+#paper-wrapper
+{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+#build-sheet-paper
+{
+    display: flex;
+    flex-direction: column;
+
+    width: 100%;
+    max-width: 8.5in;
+    aspect-ratio: 8.5 / 11;
+
+    padding: 0.5in;
+
+    background-color: white;
+    box-shadow: 5px 5px 10px 5px rgba(0,0,0,0.50);
+}
+
+#build-sheet-header
+{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+#build-sheet-header h1
+{
+    margin: 0;
+    font-weight: 400;
+    font-size: 2.5em;
+}
+
+#build-sheet-header h2
+{
+    margin: 0;
+    font-weight: 100;
+    font-size: 1.5em;
+}
+
+#build-sheet-cover-drawing
+{
+    flex: 3 0 0;
+}
+
+#build-sheet-notes
+{
+    flex: 1 0 0;
+}
+
+@media print
+{
+    #build-sheet-paper
+    {
+        width: 100vw;
+        height: 100vh;
+
+        padding: 0.25in;
+
+        box-shadow: none;
+    }
+}

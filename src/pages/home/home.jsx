@@ -24,18 +24,18 @@ function Home()
   }
 
   return (
-    <div id="page-container">
-      <div id="content">
+    <div id='page-container'>
+      <div id='home-button-container'>
         <LargeSquareButton onClick={ next }>
-          <Icon icon={AddIcon} width='3em'/>
-          New Cover
-        </LargeSquareButton>
-        <LargeSquareButton onClick={ openExisting }>
-          <Icon icon={OpenIcon} width='3em'/>
-          Open Existing
-        </LargeSquareButton>
+            <Icon icon={AddIcon} width='3em'/>
+            New Cover
+          </LargeSquareButton>
+          
+          <LargeSquareButton onClick={ openExisting }>
+            <Icon icon={OpenIcon} width='3em'/>
+            Open Existing
+          </LargeSquareButton>
       </div>
-
       <SettingsButton/>
     </div>
   );

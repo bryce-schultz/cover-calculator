@@ -1,11 +1,9 @@
 import React from 'react';
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from 'react';
 
-import Topbar from "../../components/topbar/topbar.jsx";
-import { useNav } from "../../utilities/nav.js";
-import { retrieve, save } from "../../utilities/storage.js";
-
-import './configure_customer.css';
+import Topbar from '../../components/topbar/topbar.jsx';
+import { useNav } from '../../utilities/nav.js';
+import { retrieve, save } from '../../utilities/storage.js';
 
 export default function ConfigureCustomer()
 {
@@ -79,7 +77,34 @@ export default function ConfigureCustomer()
   const [state, setState] = useState('');
   const [zipcode, setZipcode] = useState('');
 
+  const first_name_ref = useRef();
+
   useEffect(() =>
+  {
+    loadCustomerInfo();
+  }, []);
+
+  const next = () =>
+  {
+    saveCustomerInfo();
+
+    nav('/cover');
+  }
+
+  const clear = () =>
+  {
+    setFirstName('');
+    setLastName('');
+    setEmail('');
+    setAddress('');
+    setCity('');
+    setState('');
+    setZipcode('');
+
+    first_name_ref.current.focus();
+  }
+
+  const loadCustomerInfo = () =>
   {
     const customer = retrieve('customer') || 
     {
@@ -100,18 +125,7 @@ export default function ConfigureCustomer()
     setCity(customer.city);
     setState(customer.state);
     setZipcode(customer.zipcode);
-  }, []);
-
-  const next = () =>
-  {
-    saveCustomerInfo();
-    nav('/cover');
-  }
-
-  const clear = () =>
-  {
-
-  }
+  } 
 
   const saveCustomerInfo = () =>
   {
@@ -130,91 +144,93 @@ export default function ConfigureCustomer()
   }
 
   return (
-    <div id="page-container">
+    <div id='page-container'>
     <Topbar beforeBack={saveCustomerInfo}/>
-      <div id="page-content">
-        <div id="customer-form">
-          <div className="input-section" id="customer-info-form">
-            <div id="name-info">
-              <div className="labeled-input">
-                <label>First Name</label>
-                <input 
-                  type="text" 
-                  id="first-name" 
-                  value={first_name} 
-                  onChange={event => setFirstName(event.target.value)}
-                />
-              </div>
-
-              <div className="labeled-input">
-                <label>Last Name</label>
-                <input 
-                  type="text" 
-                  id="last-name"
-                  value={last_name} 
-                  onChange={event => setLastName(event.target.value)}
-                />
-              </div>
-
-              <div className="labeled-input" id="email-input">
-                <label>Email</label>
-                <input 
-                  type="text" 
-                  id="email"
-                  value={email} 
-                  onChange={event => setEmail(event.target.value)}
-                />
-              </div>
+      <div id='page-content'>
+        <div className='container'>
+          <div className='row'>
+            <div className='mb-3 col-12 col-md-6 col-lg-4'>
+              <label htmlFor='ux-first-name' className='form-label'>First Name</label>
+              <input 
+                type='text' 
+                className='form-control' 
+                id='ux-first-name'
+                ref={first_name_ref}
+                value={first_name} 
+                onChange={event => setFirstName(event.target.value)}
+              />
             </div>
 
-            <div id="address-info">
-              <div className="labeled-input">
-                <label>Address</label>
-                <input 
-                  type="text" 
-                  id="address"
-                  value={address}
-                  onChange={event => setAddress(event.target.value)}
-                />
-              </div>
-
-              <div className="labeled-input">
-                <label>City</label>
-                <input 
-                  type="text" 
-                  id="city"
-                  value={city}
-                  onChange={event => setCity(event.target.value)}
-                />
-              </div>
-                    
-              <div className="labeled-input" id="state-input">
-                <label>State</label>
-                <select 
-                  name="state" 
-                  id="state"
-                  value={state}
-                  onChange={event => setState(event.target.value)}
-                >
-                  { states }
-                </select>
-              </div>
-
-              <div className="labeled-input" id="zipcode-input">
-                <label>Zipcode</label>
-                <input 
-                  type="text" 
-                  id="zipcode"
-                  value={zipcode}
-                  onChange={event => setZipcode(event.target.value)}
-                />
-              </div>
+            <div className='mb-3 col-12 col-md-6 col-lg-4'>
+              <label htmlFor='ux-last-name' className='form-label'>Last Name</label>
+              <input 
+                type='text' 
+                className='form-control' 
+                id='ux-last-name'
+                value={last_name} 
+                onChange={event => setLastName(event.target.value)}
+              />
             </div>
 
-            <div id="form-buttons">
-              <button className="small-button" onClick={ clear }>Clear</button>
-              <button className="small-button" onClick={ next }>Next</button>
+            <div className='mb-3 col-12 col-lg-4'>
+              <label htmlFor='ux-email' className='form-label'>Email</label>
+              <input 
+                type='text' 
+                className='form-control' 
+                id='ux-email'
+                value={email} 
+                onChange={event => setEmail(event.target.value)}
+              />
             </div>
+
+            <div className='mb-3 col-12 col-lg-5'>
+              <label htmlFor='ux-address' className='form-label'>Address</label>
+              <input 
+                type='text' 
+                className='form-control' 
+                id='ux-address'
+                value={address}
+                onChange={event => setAddress(event.target.value)}
+              />
+            </div>
+
+            <div className='mb-3 col-12 col-md-6 col-lg-3'>
+              <label htmlFor='ux-city' className='form-label'>City</label>
+              <input 
+                type='text' 
+                className='form-control' 
+                id='ux-city'
+                value={city}
+                onChange={event => setCity(event.target.value)}
+              />
+            </div>
+
+            <div className='mb-3 col-12 col-md-2 col-lg-2'>
+              <label htmlFor='ux-state' className='form-label'>State</label>
+              <select 
+                id='ux-state' 
+                className="form-select"
+                value={state}
+                onChange={event => setState(event.target.value)}
+              >
+                { states }
+              </select>
+            </div>
+
+            <div className='mb-3 col-12 col-md-4 col-lg-2'>
+              <label htmlFor='ux-zip-code' className='form-label'>Zip Code</label>
+              <input 
+                type='text' 
+                className='form-control' 
+                id='ux-zip-code'
+                value={zipcode}
+                onChange={event => setZipcode(event.target.value)}
+              />
+            </div>
+          </div>
+          <div className='text-center'>
+            <button type="button" className="btn btn-custom m-2" onClick={clear}>Clear</button>
+            <button type="submit" className="btn btn-custom m-2" onClick={next}>Next</button>
           </div>
         </div>
       </div>

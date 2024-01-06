@@ -1,0 +1,7 @@
+.vertical-rule
+{
+    height: 100vh;
+    min-width: 1px;
+    max-width: 1px;
+    background-color: var(--background-accent);
+}

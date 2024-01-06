@@ -14,6 +14,7 @@ function createWindow()
             nodeIntegration: true,
             contextIsolation: false
         },
+        autoHideMenuBar: true,
     });
 
     win.loadURL(
@@ -22,18 +23,10 @@ function createWindow()
         : `file://${path.join(__dirname, '../build/index.html')}`
     );
 
-
     if (isDev) 
     {
         win.webContents.openDevTools({ mode: 'detach' });
     }
-}
-
-let err_no = 0;
-
-function i()
-{
-    return "[" + err_no++ + "] reached";
 }
 
 app.whenReady().then(createWindow);
@@ -104,7 +97,7 @@ const tables =
     }
 }
 
-const { ipcMain, dialog } = require('electron');
+const { ipcMain } = require('electron');
 const sqlite3 = require('sqlite3').verbose();
 
 // create the database folder
@@ -123,10 +116,10 @@ const database = new sqlite3.Database(database_file);
 
 ipcMain.on('db-query', (event, {query, params}) => 
 {
-    //const rows = database.prepare(query).all(...params);
+    console.log("Received query:", query, params);
     database.all(query, params, (err, rows) =>
     {
-        console.log(params, '\n', rows);
+        console.log("Result:", rows);
         event.reply('db-reply', rows);
     });
 });
@@ -153,11 +146,42 @@ VALUES (\
     0 \
 );';
 
+const insert_test_cover = 
+'INSERT OR REPLACE INTO covers (\
+    customer_id,\
+    purchase_date,\
+    type,\
+    model,\
+    length,\
+    width,\
+    corner_radius,\
+    radius,\
+    size_difference,\
+    color,\
+    airs,\
+    in_ground,\
+    id\
+)\
+VALUES (\
+    0,\
+    \'2021-03-24\',\
+    \'standard\',\
+    \'bifold\',\
+    80,\
+    80,\
+    6,\
+    0,\
+    3,\
+    \'mineral\',\
+    0,\
+    0,\
+    0\
+);';
+
 // Create the tables if they don't exist.
 database.exec(tables.customers.create);
-
 database.exec(tables.covers.create);
 
+// Insert a test user and cover.
 database.exec(insert_test_user);
-
-console.log(database_path);
+database.exec(insert_test_cover);

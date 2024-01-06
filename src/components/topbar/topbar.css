@@ -25,6 +25,8 @@
 #center
 {
     display: flex;
+    justify-content: center;
+    align-items: center;
 
     height: 100%;
     width: 100%;
@@ -38,4 +40,33 @@
 
     height: 100%;
     aspect-ratio: 1;
+}
+
+.topbar-button
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    height: 75%;
+
+    background-color: transparent;
+    color: var(--text-muted);
+
+    border: none;
+    border-radius: 4px;
+}
+
+.topbar-button:hover
+{
+    color: var(--text-normal);
+    background-color: var(--background-tertiary);
+}
+
+@media print
+{
+    #topbar
+    {
+        display: none;
+    }
 }

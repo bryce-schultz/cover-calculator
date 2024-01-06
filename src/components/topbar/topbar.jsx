@@ -5,7 +5,8 @@ import './topbar.css';
 
 export default function Topbar(
 {
-    beforeBack
+    beforeBack,
+    children
 })
 {
     return (
@@ -14,11 +15,22 @@ export default function Topbar(
                 <BackArrowNav beforeBack={beforeBack}/>
             </div>
             <div id='center'>
-                
+                {children}
             </div>
             <div id='right'>
                 
             </div>
         </div>
+    );
+}
+
+export function TopbarButton(
+{
+    onClick,
+    children
+})
+{
+    return (
+        <button className='topbar-button' onClick={onClick}>{children}</button>
     );
 }
