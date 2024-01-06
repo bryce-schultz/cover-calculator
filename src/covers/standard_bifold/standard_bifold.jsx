@@ -42,7 +42,9 @@ export class StandardBifoldCover extends RectangularCover
         return (
             <div>
                 <div>
-                    <strong>{this.color} {this.model} { this.airs ? <>w/<em>A</em>irs</> : '' }</strong>
+                    <div>
+                        <strong>{this.in_ground ? 'In Ground' : ''} {this.color} {this.model} { this.airs ? <>w/<em>A</em>irs</> : '' }</strong>
+                    </div>
                     <div>
                         <strong>Width:</strong> { units(this.width) }
                     </div>
@@ -55,12 +57,6 @@ export class StandardBifoldCover extends RectangularCover
                     <div>
                         <strong>Size Difference:</strong> { units(this.size_difference) }
                     </div>
-                    <div>
-                        <strong>In Ground:</strong> {this.in_ground ? 'Yes' : 'No'}
-                    </div>
-                </div>
-                <div>
-                    <strong>Price:</strong> { this.price }
                 </div>
             </div>
         );

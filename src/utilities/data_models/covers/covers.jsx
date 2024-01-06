@@ -64,6 +64,13 @@ export class Cover
         result.purchase_date = new Date(cover.purchase_date);
         return result;
     }
+
+    getDrawing()
+    {
+        return (
+            <div>Not implemented yet</div>
+        );
+    }
 }
 
 export class RectangularCover extends Cover
