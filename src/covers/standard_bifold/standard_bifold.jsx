@@ -43,16 +43,15 @@ export class StandardBifoldCover extends RectangularCover
             <div>
                 <div>
                     <div>
-                        <strong>{this.in_ground ? 'In Ground' : ''} {this.color} {this.model} { this.airs ? <>w/<em>A</em>irs</> : '' }</strong>
+                        <strong>
+                            { this.in_ground ? 'In Ground ' : '' }
+                            { `${this.color} ` } 
+                            { `${this.model} ` } 
+                            { this.airs ? <>w/<em>A</em>irs </> : '' }
+                        </strong>
                     </div>
                     <div>
-                        <strong>Width:</strong> { units(this.width) }
-                    </div>
-                    <div>
-                        <strong>Length:</strong> { units(this.length) }
-                    </div>
-                    <div>
-                        <strong>Corner Radius:</strong> { units(this.corner_radius) }
+                        <strong>Width &times; Length, Corner Radius:</strong> { units(this.width) } &times; { units(this.length) }, { units(this.corner_radius) }
                     </div>
                     <div>
                         <strong>Size Difference:</strong> { units(this.size_difference) }

@@ -68,7 +68,7 @@ export class Cover
     getDrawing()
     {
         return (
-            <div>Not implemented yet</div>
+            <div id='unimplemented-cover-drawing'>Drawing this cover is not supported yet.</div>
         );
     }
 }

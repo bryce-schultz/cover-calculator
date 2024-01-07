@@ -1,9 +1,9 @@
 import { retrieve } from '../../utilities/storage';
 import { StandardBifoldCover } from '../../covers/standard_bifold/standard_bifold';
-
 import Topbar, { TopbarButton } from '../../components/topbar/topbar';
-import './build_sheet.css';
 import { Customer } from '../../utilities/data_models/covers/covers';
+
+import './build_sheet.css';
 
 function getCustomer()
 {
@@ -49,8 +49,13 @@ export default function BuildSheet()
     return (
         <div id='page-container'>
             <Topbar>
-                <TopbarButton onClick={printPage}><span className="material-symbols-outlined">print</span></TopbarButton>
+                <TopbarButton onClick={printPage} tooltip="Print">
+                    <span className="material-symbols-outlined">
+                        print
+                    </span>
+                </TopbarButton>
             </Topbar>
+
             <div id='page-content'>
                 <div id='paper-wrapper'>
                     <div id='build-sheet-paper'>
@@ -73,13 +78,21 @@ export default function BuildSheet()
                             </table>
                         </div>
                         
-                        <div id='build-sheet-cover-drawing'>
+                        <div id='build-sheet-cover-drawing-wrapper'>
+                            <div id='build-sheet-cover-drawing'>
+                                { cover !== null && cover.getDrawing() }
+                            </div>
                         </div>
 
                         <hr/>
 
-                        <div id='build-sheet-notes'>    
-                            Notes:
+                        <div id='build-sheet-notes-wrapper'>
+                            <div id='build-sheet-notes-title'>
+                                Notes:
+                                </div>  
+                            <div id='build-sheet-notes' contentEditable='true'>
+                                { /* Editable notes area */ }
+                            </div>
                         </div>
                     </div>
                 </div>

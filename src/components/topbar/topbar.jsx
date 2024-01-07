@@ -27,10 +27,11 @@ export default function Topbar(
 export function TopbarButton(
 {
     onClick,
-    children
+    children,
+    tooltip
 })
 {
     return (
-        <button className='topbar-button' onClick={onClick}>{children}</button>
+        <button title={tooltip ? tooltip : ''} className='topbar-button' onClick={onClick}>{children}</button>
     );
 }
