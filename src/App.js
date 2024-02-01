@@ -12,6 +12,7 @@ import OpenExisting from './pages/open_existing/open_existing.jsx';
 import ConfigureCustomer from './pages/configure_customer/configure_cutomer.jsx';
 import { StandardBifoldConfiguration, standard_path } from "./covers/standard_bifold/standard_bifold.jsx";
 import BuildSheet from "./pages/build_sheet/build_sheet.jsx";
+import { BluecubeConfiguration, bluecube_path } from "./covers/bluecube/bluecube.jsx";
 
 function App() 
 {
@@ -24,6 +25,7 @@ function App()
         <Route path='customer'      element={ <ConfigureCustomer/> }/>
         <Route path='cover'         element={ <ConfigureCover/> }/>
         <Route path={standard_path} element={ <StandardBifoldConfiguration/> }/>
+        <Route path={bluecube_path} element={ <BluecubeConfiguration/> }/>
         <Route path='buildsheet'    element={ <BuildSheet/> }/>
       </Routes>
     </HashRouter>

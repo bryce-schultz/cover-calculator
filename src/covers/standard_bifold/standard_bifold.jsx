@@ -60,6 +60,11 @@ export class StandardBifoldCover extends RectangularCover
             </div>
         );
     }
+
+    draw()
+    {
+        
+    }
 }
 
 // export the button

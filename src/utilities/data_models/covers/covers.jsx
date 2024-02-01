@@ -28,10 +28,15 @@ export class Customer
     {
         return (
                 <div className="customer-info">
-                    <div>{this.first_name} {this.last_name}</div>
-                    <div>{this.address}</div>
-                    <div>{this.city}, {this.state} {this.zipcode}</div>
-                    <div>{this.email}</div>
+                    {
+                        this.first_name !== "" && 
+                        <>
+                            <div>{this.first_name} {this.last_name}</div>
+                            <div>{this.address}</div>
+                            <div>{this.city}, {this.state} {this.zipcode}</div>
+                            <div>{this.email}</div>
+                        </>
+                    }
                 </div>
         );
     }
@@ -65,7 +70,7 @@ export class Cover
         return result;
     }
 
-    getDrawing()
+    draw()
     {
         return (
             <div id='unimplemented-cover-drawing'>Drawing this cover is not supported yet.</div>

@@ -1,9 +1,13 @@
 import { retrieve } from '../../utilities/storage';
-import { StandardBifoldCover } from '../../covers/standard_bifold/standard_bifold';
 import Topbar, { TopbarButton } from '../../components/topbar/topbar';
 import { Customer } from '../../utilities/data_models/covers/covers';
 
+// covers
+import { StandardBifoldCover } from '../../covers/standard_bifold/standard_bifold';
+import { BluecubeCover } from '../../covers/bluecube/bluecube';
+
 import './build_sheet.css';
+import { useEffect } from 'react';
 
 function getCustomer()
 {
@@ -31,6 +35,10 @@ function getCover()
     {
         cover = StandardBifoldCover.fromJson(cover);
     }
+    else if (cover.model === 'Bluecube')
+    {
+        cover = BluecubeCover.fromJson(cover);
+    }
 
     console.log(cover);
     return cover;
@@ -45,6 +53,14 @@ export default function BuildSheet()
     {
         window.print();
     }
+
+    useEffect(() => 
+    {
+        if (cover !== null)
+        {
+            cover.draw();
+        }
+    }, [cover]);
 
     return (
         <div id='page-container'>
@@ -80,7 +96,7 @@ export default function BuildSheet()
                         
                         <div id='build-sheet-cover-drawing-wrapper'>
                             <div id='build-sheet-cover-drawing'>
-                                { cover !== null && cover.getDrawing() }
+                                {/*<canvas id='cover-drawing'></canvas> */}
                             </div>
                         </div>
 
