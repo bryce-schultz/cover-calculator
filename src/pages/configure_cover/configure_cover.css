@@ -10,15 +10,3 @@
     align-items: center;
     justify-content: center;
 }
-
-.page-title
-{
-    text-align: center;
-    color: var(--text-muted);
-}
-
-.page-title h1
-{
-    margin: 1rem;
-    font-size: 2rem;
-}

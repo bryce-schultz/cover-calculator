@@ -6,6 +6,7 @@ import '../covers.css';
 import { RectangularCover } from "../../utilities/data_models/covers/covers";
 import { retrieve, save } from "../../utilities/storage";
 import units from "../../utilities/formatters/format_with_units";
+import { getSettings } from "../../utilities/settings/settings";
 
 // export the path
 export const standard_path = "/standard_bifold";
@@ -151,6 +152,7 @@ export function StandardBifoldConfiguration()
     useEffect(() =>
     {
         loadCoverInfo();
+        getSettings();
     }, []);
 
     return (

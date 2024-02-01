@@ -24,8 +24,10 @@ function App()
         <Route path='open'          element={ <OpenExisting/>}/>
         <Route path='customer'      element={ <ConfigureCustomer/> }/>
         <Route path='cover'         element={ <ConfigureCover/> }/>
+        
         <Route path={standard_path} element={ <StandardBifoldConfiguration/> }/>
         <Route path={bluecube_path} element={ <BluecubeConfiguration/> }/>
+
         <Route path='buildsheet'    element={ <BuildSheet/> }/>
       </Routes>
     </HashRouter>
