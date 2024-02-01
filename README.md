@@ -1,6 +1,10 @@
-# Getting Started with Create React App
+# Spa Cover Calculator
+By: Bryce Schultz
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Description
+
+The Spa Cover Calculator is a tool used to make calculations for building
+high-quality spa covers.
 
 ## Available Scripts
 
@@ -10,9 +14,6 @@ In the project directory, you can run:
 
 Runs the app in the development mode.
 
-### `npm run package`
+### `npm run build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-Packages the app for distribution to the `dist` folder.\
+Builds the project for Windows as a packed and unpacked application.
