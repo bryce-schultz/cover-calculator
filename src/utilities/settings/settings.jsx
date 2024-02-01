@@ -18,3 +18,8 @@ export const getSettings = () =>
     console.log(settings);
     return settings;
 }
+
+export const saveSettings = (settings) =>
+{
+    saveLocal('settings', settings);
+}

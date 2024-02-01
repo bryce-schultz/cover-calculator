@@ -6,6 +6,7 @@ import '../covers.css';
 import { RectangularCover } from "../../utilities/data_models/covers/covers";
 import { retrieve, save } from "../../utilities/storage";
 import units from "../../utilities/formatters/format_with_units";
+import { getSettings } from "../../utilities/settings/settings";
 
 // export the path
 export const bluecube_path = "/bluecube";
@@ -99,12 +100,25 @@ export function BluecubeConfiguration()
 
     const saveCoverInfo = () =>
     {
+        // in inches
+        let width = 37.5;
+        let length = 92.5;
+
+        // convert to metric if necessary
+        if (getSettings().units === 'metric')
+        {
+            width = width * 2.54;
+            length = length * 2.54;
+        }
+
         let cover = new BluecubeCover(
-            37.5, 
-            92.5, 
+            width, 
+            length, 
             0, 
             false, 
             color === "" ? "None" : color);
+
+        
 
         save('cover', cover);
     }

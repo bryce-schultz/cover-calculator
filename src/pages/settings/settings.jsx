@@ -1,16 +1,25 @@
 import React, { useState } from 'react';
 
-import Topbar from "../../components/topbar/topbar.jsx";
-import { getSettings } from '../../utilities/settings/settings.jsx';
+import Topbar from "../../components/topbar/topbar";
+import { getSettings, saveSettings } from '../../utilities/settings/settings';
+
 
 export default function Settings()
 {
-
   const [units, setUnits] = useState(getSettings().units);
+  const [precision, setPrecision] = useState(getSettings().precision);
 
   return (
     <div id="page-container">
-      <Topbar/>
+      <Topbar beforeBack={() => 
+        {
+          saveSettings(
+          {
+            units: units, 
+            precision: precision
+          });
+        }}
+      />
       <div className="page-title"><h1>Settings</h1></div>
       <div id='page-content'>
         <div className='container'>
@@ -21,6 +30,8 @@ export default function Settings()
                   type='text' 
                   className='form-control' 
                   id='ux-corner-radius'
+                  value={precision}
+                  onChange={event => setPrecision(event.target.value)}
               />
             </div>
 
