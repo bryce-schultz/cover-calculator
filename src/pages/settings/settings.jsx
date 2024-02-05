@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
-
 import Topbar from "../../components/topbar/topbar";
 import { getSettings, saveSettings } from '../../utilities/settings/settings';
-
 
 export default function Settings()
 {
