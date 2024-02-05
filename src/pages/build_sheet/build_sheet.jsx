@@ -4,11 +4,13 @@ import { Customer } from '../../utilities/data_models/covers/covers';
 
 // covers
 import { StandardBifoldCover } from '../../covers/standard_bifold/standard_bifold';
+import { SwimSpaCover } from '../../covers/swimspa/swimspa';
 import { BluecubeCover } from '../../covers/bluecube/bluecube';
 
 import './build_sheet.css';
 import { useEffect } from 'react';
 
+// customer resolver
 function getCustomer()
 {
     let customer = retrieve('customer');
@@ -34,6 +36,10 @@ function getCover()
     if (cover.model === 'Standard Bifold')
     {
         cover = StandardBifoldCover.fromJson(cover);
+    }
+    else if (cover.model === 'SwimSpa')
+    {
+        cover = SwimSpaCover.fromJson(cover);
     }
     else if (cover.model === 'Bluecube')
     {
