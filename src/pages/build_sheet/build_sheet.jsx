@@ -102,7 +102,7 @@ export default function BuildSheet()
                         
                         <div id='build-sheet-cover-drawing-wrapper'>
                             <div id='build-sheet-cover-drawing'>
-                                {/*<canvas id='cover-drawing'></canvas> */}
+                                { /*<canvas id='cover-drawing'></canvas> */ }
                             </div>
                         </div>
 
