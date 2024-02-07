@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { retrieve } from '../../utilities/storage';
 import Topbar, { TopbarButton } from '../../components/topbar/topbar';
 import { Customer } from '../../utilities/data_models/covers/covers';
@@ -8,7 +9,6 @@ import { SwimSpaCover, swimspa_name } from '../../covers/swimspa/swimspa';
 import { BluecubeCover, bluecube_name } from '../../covers/bluecube/bluecube';
 
 import './build_sheet.css';
-import { useEffect } from 'react';
 
 // customer resolver
 function getCustomer()
@@ -62,6 +62,11 @@ export default function BuildSheet()
         window.print();
     }
 
+    const saveToDatabase = () =>
+    {
+        
+    }
+
     useEffect(() => 
     {
         if (cover !== null)
@@ -76,6 +81,12 @@ export default function BuildSheet()
                 <TopbarButton onClick={printPage} tooltip="Print">
                     <span className="material-symbols-outlined">
                         print
+                    </span>
+                </TopbarButton>
+
+                <TopbarButton onClick={saveToDatabase} tooltip="Print">
+                    <span className="material-symbols-outlined">
+                        save
                     </span>
                 </TopbarButton>
             </Topbar>

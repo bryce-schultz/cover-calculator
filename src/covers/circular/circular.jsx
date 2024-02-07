@@ -2,21 +2,21 @@ import React, { useState, useRef, useEffect } from 'react';
 import Topbar from '../../components/topbar/topbar';
 import { useNav } from '../../utilities/nav';
 import ColorPicker from '../../components/color_picker/color_picker';
-import { RectangularCover } from '../../utilities/data_models/covers/covers';
+import { Cover } from '../../utilities/data_models/covers/covers';
 import { retrieve, save } from '../../utilities/storage';
 import units from '../../utilities/formatters/format_with_units';
 import '../covers.css';
 
 // export the path
-export const swimspa_path = '/swimspa';
-export const swimspa_name = 'Swim Spa';
+export const circular_path = '/circular';
+export const circular_name = 'Circular';
 
 // export the class
-export class SwimSpaCover extends RectangularCover
+export class CircularCover extends Cover
 {
-    constructor(width, length, panel_count, taper_direction, corner_radius, in_ground, color)
+    constructor(panel_count, in_ground, color)
     {
-        super(swimspa_name, color, in_ground, width, length, corner_radius);
+        super(circular_name, color, in_ground, width, length, corner_radius);
 
         this.panel_count = panel_count;
         this.taper_direction = taper_direction;
@@ -77,11 +77,11 @@ export function SwimSpaCoverButton()
 
     const handleClick = () => 
     {
-        nav(swimspa_path);
+        nav(circular_path);
     }
 
     return (
-        <button className='cover-button' onClick={handleClick}>{swimspa_name}</button>
+        <button className='cover-button' onClick={handleClick}>{circular_name}</button>
     );
 }
 
@@ -117,7 +117,7 @@ export function SwimSpaConfiguration()
     {
         let cover = retrieve('cover');
 
-        if (cover !== null && cover.model === swimspa_name)
+        if (cover !== null && cover.model === circular_name)
         {
             cover = SwimSpaCover.fromJson(cover);
 

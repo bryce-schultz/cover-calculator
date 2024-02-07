@@ -3,6 +3,8 @@ const path = require('path');
 const { app, BrowserWindow } = require('electron');
 const isDev = require('electron-is-dev');
 
+const icon_path = path.join(__dirname, '../public/favicon.ico');
+
 function createWindow() 
 {
     const win = new BrowserWindow(
@@ -15,6 +17,7 @@ function createWindow()
             contextIsolation: false
         },
         autoHideMenuBar: true,
+        icon: icon_path,
     });
 
     win.loadURL(
