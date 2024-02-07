@@ -3,7 +3,7 @@ import Topbar, { TopbarButton } from '../../components/topbar/topbar';
 import { Customer } from '../../utilities/data_models/covers/covers';
 
 // covers
-import { StandardBifoldCover } from '../../covers/standard_bifold/standard_bifold';
+import { StandardBifoldCover, standard_name } from '../../covers/standard_bifold/standard_bifold';
 import { SwimSpaCover, swimspa_name } from '../../covers/swimspa/swimspa';
 import { BluecubeCover, bluecube_name } from '../../covers/bluecube/bluecube';
 
@@ -32,6 +32,8 @@ function getCover()
     let cover = retrieve('cover');
 
     if (cover === null || cover === undefined) return null;
+
+    console.log(cover.model)
 
     if (cover.model === standard_name)
     {

@@ -17,7 +17,7 @@ export class StandardBifoldCover extends RectangularCover
 {
     constructor(width, length, corner_radius, size_difference, in_ground, airs, color)
     {
-        super('standard_name', color, in_ground, width, length, corner_radius);
+        super(standard_name, color, in_ground, width, length, corner_radius);
 
         this.size_difference = size_difference;
         this.airs = airs;
@@ -116,7 +116,7 @@ export function StandardBifoldConfiguration()
     {
         let cover = retrieve('cover');
 
-        if (cover !== null && cover.model === 'standard_name')
+        if (cover !== null && cover.model === standard_name)
         {
             cover = StandardBifoldCover.fromJson(cover);
 
