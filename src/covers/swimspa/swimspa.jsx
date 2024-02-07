@@ -1,15 +1,15 @@
-import React, { useState, useRef, useEffect } from "react";
-import Topbar from "../../components/topbar/topbar";
-import { useNav } from "../../utilities/nav";
-import ColorPicker from "../../components/color_picker/color_picker";
+import React, { useState, useRef, useEffect } from 'react';
+import Topbar from '../../components/topbar/topbar';
+import { useNav } from '../../utilities/nav';
+import ColorPicker from '../../components/color_picker/color_picker';
 import '../covers.css';
-import { RectangularCover } from "../../utilities/data_models/covers/covers";
-import { retrieve, save } from "../../utilities/storage";
-import units from "../../utilities/formatters/format_with_units";
+import { RectangularCover } from '../../utilities/data_models/covers/covers';
+import { retrieve, save } from '../../utilities/storage';
+import units from '../../utilities/formatters/format_with_units';
 
 // export the path
-export const swimspa_path = "/swimspa";
-export const swimspa_name = "SwimSpa";
+export const swimspa_path = '/swimspa';
+export const swimspa_name = 'Swim Spa';
 
 // export the class
 export class SwimSpaCover extends RectangularCover
@@ -81,7 +81,7 @@ export function SwimSpaCoverButton()
     }
 
     return (
-        <button className="cover-button" onClick={handleClick}>{swimspa_name}</button>
+        <button className='cover-button' onClick={handleClick}>{swimspa_name}</button>
     );
 }
 
@@ -140,7 +140,7 @@ export function SwimSpaConfiguration()
             taper_direction, 
             Number(corner_radius),
             Boolean(in_ground),
-            color === "" ? "None" : color);
+            color === '' ? 'None' : color);
 
         save('cover', cover);
     }
@@ -211,7 +211,7 @@ export function SwimSpaConfiguration()
                             <label htmlFor='ux-length' className='form-label'>Taper Direction</label>
                             <select 
                                 id='ux-taper-direction' 
-                                className="form-select"
+                                className='form-select'
                                 value={taper_direction}
                                 onChange={event => setTaperDirection(event.target.value)}
                             >
@@ -231,15 +231,15 @@ export function SwimSpaConfiguration()
                         </div>
 
                         <div className='col-12 col-md-3 col-lg-2'>
-                            <div className="form-check">
+                            <div className='form-check'>
                                 <input 
-                                    className="form-check-input" 
-                                    type="checkbox" 
-                                    id="ux-in-ground"
+                                    className='form-check-input' 
+                                    type='checkbox' 
+                                    id='ux-in-ground'
                                     checked={in_ground}
                                     onChange={event => setInGround(event.target.checked)}
                                     />
-                                <label className="form-check-label" htmlFor="ux-in-ground">
+                                <label className='form-check-label' htmlFor='ux-in-ground'>
                                     In Ground?
                                 </label>
                             </div>
@@ -247,8 +247,8 @@ export function SwimSpaConfiguration()
                     </div>
 
                     <div className='text-center'>
-                        <button type="button" className="btn btn-custom m-2" onClick={clear}>Clear</button>
-                        <button type="submit" className="btn btn-custom m-2" onClick={next}>Next</button>
+                        <button type='button' className='btn btn-custom m-2' onClick={clear}>Clear</button>
+                        <button type='submit' className='btn btn-custom m-2' onClick={next}>Next</button>
                     </div>
                 </div>
             </div>

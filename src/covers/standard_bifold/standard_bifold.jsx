@@ -1,22 +1,23 @@
-import React, { useState, useRef, useEffect } from "react";
-import Topbar from "../../components/topbar/topbar";
-import { useNav } from "../../utilities/nav";
-import ColorPicker from "../../components/color_picker/color_picker";
+import React, { useState, useRef, useEffect } from 'react';
+import Topbar from '../../components/topbar/topbar';
+import { useNav } from '../../utilities/nav';
+import ColorPicker from '../../components/color_picker/color_picker';
+import { RectangularCover } from '../../utilities/data_models/covers/covers';
+import { retrieve, save } from '../../utilities/storage';
+import units from '../../utilities/formatters/format_with_units';
+import { getSettings } from '../../utilities/settings/settings';
 import '../covers.css';
-import { RectangularCover } from "../../utilities/data_models/covers/covers";
-import { retrieve, save } from "../../utilities/storage";
-import units from "../../utilities/formatters/format_with_units";
-import { getSettings } from "../../utilities/settings/settings";
 
 // export the path
-export const standard_path = "/standard_bifold";
+export const standard_path = '/standard_bifold';
+export const standard_name = 'Standard Bifold';
 
 // export the class
 export class StandardBifoldCover extends RectangularCover
 {
     constructor(width, length, corner_radius, size_difference, in_ground, airs, color)
     {
-        super('Standard Bifold', color, in_ground, width, length, corner_radius);
+        super('standard_name', color, in_ground, width, length, corner_radius);
 
         this.size_difference = size_difference;
         this.airs = airs;
@@ -79,7 +80,7 @@ export function StandardBifoldButton()
     }
 
     return (
-        <button className="cover-button" onClick={handleClick}>Standard</button>
+        <button className='cover-button' onClick={handleClick}>Standard</button>
     );
 }
 
@@ -115,7 +116,7 @@ export function StandardBifoldConfiguration()
     {
         let cover = retrieve('cover');
 
-        if (cover !== null && cover.model === 'Standard Bifold')
+        if (cover !== null && cover.model === 'standard_name')
         {
             cover = StandardBifoldCover.fromJson(cover);
 
@@ -138,7 +139,7 @@ export function StandardBifoldConfiguration()
             Number(size_difference), 
             Boolean(in_ground), 
             Boolean(airs), 
-            color === "" ? "None" : color);
+            color === '' ? 'None' : color);
 
         save('cover', cover);
     }
@@ -212,31 +213,31 @@ export function StandardBifoldConfiguration()
                         </div>
 
                         <div className='col-12 col-md-3 col-lg-2'>
-                            <div className="form-check">
+                            <div className='form-check'>
                                 <input 
-                                    className="form-check-input" 
-                                    type="checkbox" 
-                                    id="ux-in-ground"
+                                    className='form-check-input' 
+                                    type='checkbox' 
+                                    id='ux-in-ground'
                                     checked={in_ground}
                                     onChange={event => setInGround(event.target.checked)}
                                     />
-                                <label className="form-check-label" htmlFor="ux-in-ground">
+                                <label className='form-check-label' htmlFor='ux-in-ground'>
                                     In Ground?
                                 </label>
                             </div>
                         </div>
 
                         <div className='mb-3 col-12 col-md-9 col-lg-10'>
-                            <div className="form-check">
+                            <div className='form-check'>
                                 <input 
-                                    className="form-check-input" 
-                                    type="checkbox" 
-                                    value="" 
-                                    id="ux-airs"
+                                    className='form-check-input' 
+                                    type='checkbox' 
+                                    value='' 
+                                    id='ux-airs'
                                     checked={airs}
                                     onChange={event => setAirs(event.target.checked)}
                                     />
-                                <label className="form-check-label" htmlFor="ux-airs">
+                                <label className='form-check-label' htmlFor='ux-airs'>
                                     <i>A</i>irs?
                                 </label>
                             </div>
@@ -244,8 +245,8 @@ export function StandardBifoldConfiguration()
                     </div>
 
                     <div className='text-center'>
-                        <button type="button" className="btn btn-custom m-2" onClick={clear}>Clear</button>
-                        <button type="submit" className="btn btn-custom m-2" onClick={next}>Next</button>
+                        <button type='button' className='btn btn-custom m-2' onClick={clear}>Clear</button>
+                        <button type='submit' className='btn btn-custom m-2' onClick={next}>Next</button>
                     </div>
                 </div>
             </div>
