@@ -14,6 +14,7 @@ import { StandardBifoldConfiguration, standard_path } from "./covers/standard_bi
 import BuildSheet from "./pages/build_sheet/build_sheet.jsx";
 import { BluecubeConfiguration, bluecube_path } from "./covers/bluecube/bluecube.jsx";
 import { SwimSpaConfiguration, swimspa_path } from "./covers/swimspa/swimspa.jsx";
+import { CircularConfiguration, circular_path } from "./covers/circular/circular.jsx";
 
 function App() 
 {
@@ -29,6 +30,7 @@ function App()
         <Route path={standard_path} element={ <StandardBifoldConfiguration/> }/>
         <Route path={swimspa_path}  element={ <SwimSpaConfiguration/> }/>
         <Route path={bluecube_path} element={ <BluecubeConfiguration/> }/>
+        <Route path={circular_path} element={ <CircularConfiguration/> }/>
 
         <Route path='buildsheet'    element={ <BuildSheet/> }/>
       </Routes>

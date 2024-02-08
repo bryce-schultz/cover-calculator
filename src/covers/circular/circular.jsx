@@ -14,22 +14,19 @@ export const circular_name = 'Circular';
 // export the class
 export class CircularCover extends Cover
 {
-    constructor(panel_count, in_ground, color)
+    constructor(radius, panel_count, in_ground, color)
     {
-        super(circular_name, color, in_ground, width, length, corner_radius);
+        super(circular_name, color, in_ground);
 
         this.panel_count = panel_count;
-        this.taper_direction = taper_direction;
+        this.radius = radius;
     }
 
     static fromJson(cover)
     {
-        let result = new SwimSpaCover(
-            cover.width,
-            cover.length,
+        let result = new CircularCover(
+            cover.radius,
             cover.panel_count,
-            cover.taper_direction,
-            cover.corner_radius,
             cover.in_ground,
             cover.color);
 
@@ -71,7 +68,7 @@ export class CircularCover extends Cover
 }
 
 // export the button
-export function SwimSpaCoverButton()
+export function CircularButton()
 {
     let nav = useNav();
 
@@ -86,31 +83,25 @@ export function SwimSpaCoverButton()
 }
 
 // export the configuration page
-export function SwimSpaConfiguration()
+export function CircularConfiguration()
 {
     const nav = useNav();
 
-    const [width, setWidth] = useState('');
-    const [length, setLength] = useState('');
+    const [radius, setRadius] = useState('');
     const [panel_count, setPanelCount] = useState('');
-    const [taper_direction, setTaperDirection] = useState('width');
-    const [corner_radius, setCornerRadius] = useState('');
     const [in_ground, setInGround] = useState(false);
     const [color, setColor] = useState('');
 
-    const widthRef = useRef(null);
+    const radius_ref = useRef(null);
 
     const clear = () =>
     {
-        setWidth('');
-        setLength('');
-        setCornerRadius('');
+        setRadius('');
         setPanelCount('');
-        setTaperDirection('width');
         setInGround(false);
         setColor('');
 
-        widthRef.current.focus();
+        radius_ref.current.focus();
     }
 
     const loadCoverInfo = () =>
@@ -119,13 +110,10 @@ export function SwimSpaConfiguration()
 
         if (cover !== null && cover.model === circular_name)
         {
-            cover = SwimSpaCover.fromJson(cover);
+            cover = CircularCover.fromJson(cover);
 
-            setWidth(cover.width);
-            setLength(cover.length);
+            setRadius(cover.radius);
             setPanelCount(cover.panel_count);
-            setTaperDirection(cover.taper_direction);
-            setCornerRadius(cover.corner_radius);
             setInGround(cover.in_ground);
             setColor(cover.color);
         }
@@ -133,12 +121,9 @@ export function SwimSpaConfiguration()
 
     const saveCoverInfo = () =>
     {
-        let cover = new SwimSpaCover(
-            Number(width), 
-            Number(length),
+        let cover = new CircularCover(
+            Number(radius), 
             Number(panel_count),
-            taper_direction, 
-            Number(corner_radius),
             Boolean(in_ground),
             color === '' ? 'None' : color);
 
@@ -163,36 +148,14 @@ export function SwimSpaConfiguration()
                 <div className='container'>
                     <div className='row'>
                         <div className='mb-3 col-12 col-md-4'>
-                            <label htmlFor='ux-width' className='form-label'>Width</label>
+                            <label htmlFor='ux-radius' className='form-label'>Radius</label>
                             <input
-                                ref={widthRef}
+                                ref={radius_ref}
                                 type='number' 
                                 className='form-control' 
                                 id='ux-width'
-                                value={width}
-                                onChange={event => setWidth(event.target.value)}
-                            />
-                        </div>
-
-                        <div className='mb-3 col-12 col-md-4'>
-                            <label htmlFor='ux-length' className='form-label'>Length</label>
-                            <input 
-                                type='number' 
-                                className='form-control' 
-                                id='ux-length'
-                                value={length}
-                                onChange={event => setLength(event.target.value)}
-                            />
-                        </div>
-
-                        <div className='mb-3 col-12 col-md-4'>
-                            <label htmlFor='ux-corner-radius' className='form-label'>Corner Radius</label>
-                            <input 
-                                type='text' 
-                                className='form-control' 
-                                id='ux-corner-radius'
-                                value={corner_radius}
-                                onChange={event => setCornerRadius(event.target.value)}
+                                value={radius}
+                                onChange={event => setRadius(event.target.value)}
                             />
                         </div>
 
@@ -205,24 +168,6 @@ export function SwimSpaConfiguration()
                                 value={panel_count}
                                 onChange={event => setPanelCount(event.target.value)}
                             />
-                        </div>
-
-                        <div className='mb-3 col-12 col-md-6'>
-                            <label htmlFor='ux-length' className='form-label'>Taper Direction</label>
-                            <select 
-                                id='ux-taper-direction' 
-                                className='form-select'
-                                value={taper_direction}
-                                onChange={event => setTaperDirection(event.target.value)}
-                            >
-                                <option value='length'>
-                                    Long Ways
-                                </option>
-
-                                <option value='width'>
-                                    Width Ways
-                                </option>
-                            </select>
                         </div>
 
                         <div className='mb-3 col-12'>

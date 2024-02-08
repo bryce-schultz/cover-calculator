@@ -4,17 +4,31 @@ import './configure_cover.css';
 import { StandardBifoldButton } from '../../covers/standard_bifold/standard_bifold.jsx';
 import { BluecubeButton } from '../../covers/bluecube/bluecube.jsx';
 import { SwimSpaCoverButton } from '../../covers/swimspa/swimspa.jsx';
+import { CircularButton } from '../../covers/circular/circular.jsx';
 
 export default function ConfigureCover()
 {
   return (
     <div id='page-container'>
       <Topbar/>
+      <div id='page-content'>
       <div className='page-title'><h1>Choose a Model</h1></div>
-      <div id='model-button-wrap'>
-        <StandardBifoldButton/>
-        <SwimSpaCoverButton/>
-        <BluecubeButton/>
+        <div className='container'>
+          <div className='row'>
+            <div className='mb-3 col-sm-12 col-md-3'>
+              <StandardBifoldButton/>
+            </div>
+            <div className='mb-3 col-sm-12 col-md-3'>
+              <SwimSpaCoverButton/>
+            </div>
+            <div className='mb-3 col-sm-12 col-md-3'>
+              <CircularButton/>
+            </div>
+            <div className='mb-3 col-sm-12 col-md-3'>
+              <BluecubeButton/>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
