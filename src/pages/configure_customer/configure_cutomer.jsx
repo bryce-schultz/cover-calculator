@@ -147,6 +147,9 @@ export default function ConfigureCustomer()
     <div id='page-container'>
     <Topbar beforeBack={saveCustomerInfo}/>
       <div id='page-content'>
+        <div className='page-title'>
+          <h1>Enter the Customer's Information</h1>
+        </div>
         <div className='container'>
           <div className='row'>
             <div className='mb-3 col-12 col-md-6 col-lg-4'>

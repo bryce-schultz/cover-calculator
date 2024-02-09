@@ -12,19 +12,21 @@ export default function ConfigureCover()
     <div id='page-container'>
       <Topbar/>
       <div id='page-content'>
-      <div className='page-title'><h1>Choose a Model</h1></div>
+        <div className='page-title'>
+          <h1>Choose a Model</h1>
+        </div>
         <div className='container'>
           <div className='row'>
-            <div className='mb-3 col-sm-12 col-md-3'>
+            <div className='mb-3 col-12'>
               <StandardBifoldButton/>
             </div>
-            <div className='mb-3 col-sm-12 col-md-3'>
+            <div className='mb-3 col-12'>
               <SwimSpaCoverButton/>
             </div>
-            <div className='mb-3 col-sm-12 col-md-3'>
+            <div className='mb-3 col-12'>
               <CircularButton/>
             </div>
-            <div className='mb-3 col-sm-12 col-md-3'>
+            <div className='mb-3 col-12'>
               <BluecubeButton/>
             </div>
           </div>

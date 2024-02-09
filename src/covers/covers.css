@@ -12,9 +12,22 @@
     font-size: 1.5rem;
 }
 
+.cover-button:disabled
+{
+    background-color: var(--background-secondary);
+    color: var(--text-muted-muted);
+
+    cursor: not-allowed;
+}
+
 .cover-button:hover
 {
     background-color: var(--background-accent);
+}
+
+.cover-button:disabled:hover
+{
+    background-color: var(--background-secondary);
 }
 
 #cover-configuration-page

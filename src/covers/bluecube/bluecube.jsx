@@ -10,7 +10,7 @@ import { getSettings } from "../../utilities/settings/settings";
 
 // export the path
 export const bluecube_path = "/bluecube";
-export const bluecube_name = "Bluecube";
+export const bluecube_name = "BlueCube";
 
 // export the class
 export class BluecubeCover extends RectangularCover
@@ -63,6 +63,8 @@ export class BluecubeCover extends RectangularCover
 export function BluecubeButton()
 {
     let nav = useNav();
+    const mode = retrieve('mode');
+    const cover = retrieve('cover');
 
     const handleClick = () => 
     {
@@ -70,7 +72,13 @@ export function BluecubeButton()
     }
 
     return (
-        <button className="cover-button" onClick={handleClick}>{bluecube_name}</button>
+        <button 
+            className="cover-button" 
+            onClick={handleClick}
+            disabled={mode === 'edit' && cover.model !== bluecube_name}
+        >
+            {bluecube_name}
+        </button>
     );
 }
 
@@ -138,6 +146,9 @@ export function BluecubeConfiguration()
         <div id='page-container'>
             <Topbar beforeBack={saveCoverInfo}/>
             <div id='page-content'>
+                <div className='page-title'>
+                    <h1>Enter the {bluecube_name} Details</h1>
+                </div>
                 <div className='container'>
                     <div className='row'>
                         <div className='mb-3 col-12'>

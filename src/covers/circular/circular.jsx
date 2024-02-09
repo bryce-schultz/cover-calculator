@@ -48,13 +48,10 @@ export class CircularCover extends Cover
                         </strong>
                     </div>
                     <div>
-                        <strong>Width &times; Length, Corner Radius:</strong> { units(this.width) } &times; { units(this.length) }, { units(this.corner_radius) }
+                        <strong>Radius:</strong> { units(this.radius) }
                     </div>
                     <div>
                         <strong>Panel Count:</strong> { this.panel_count }
-                    </div>
-                    <div>
-                        <strong>Taper Direction:</strong> { this.taper_direction === 'width' ? 'Width Ways' : 'Length Ways' }
                     </div>
                 </div>
             </div>
@@ -71,6 +68,8 @@ export class CircularCover extends Cover
 export function CircularButton()
 {
     let nav = useNav();
+    const mode = retrieve('mode');
+    const cover = retrieve('cover');
 
     const handleClick = () => 
     {
@@ -78,7 +77,13 @@ export function CircularButton()
     }
 
     return (
-        <button className='cover-button' onClick={handleClick}>{circular_name}</button>
+        <button 
+            className='cover-button' 
+            onClick={handleClick}
+            disabled={mode === 'edit' && cover.model !== circular_name}
+        >
+            {circular_name}
+        </button>
     );
 }
 
@@ -145,9 +150,12 @@ export function CircularConfiguration()
         <div id='page-container'>
             <Topbar beforeBack={saveCoverInfo}/>
             <div id='page-content'>
+                <div className='page-title'>
+                    <h1>Enter the {circular_name} Details</h1>
+                </div>
                 <div className='container'>
                     <div className='row'>
-                        <div className='mb-3 col-12 col-md-4'>
+                        <div className='mb-3 col-12 col-md-6'>
                             <label htmlFor='ux-radius' className='form-label'>Radius</label>
                             <input
                                 ref={radius_ref}

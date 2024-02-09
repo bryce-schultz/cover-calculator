@@ -73,6 +73,10 @@ export class StandardBifoldCover extends RectangularCover
 export function StandardBifoldButton()
 {
     let nav = useNav();
+    const mode = retrieve('mode');
+    const cover = retrieve('cover');
+
+    console.log(mode, cover);
 
     const handleClick = () => 
     {
@@ -80,7 +84,13 @@ export function StandardBifoldButton()
     }
 
     return (
-        <button className='cover-button' onClick={handleClick}>Standard</button>
+        <button 
+            className='cover-button' 
+            onClick={handleClick} 
+            disabled={mode === 'edit' && cover.model !== standard_name}
+        >
+            {standard_name}
+        </button>
     );
 }
 
@@ -160,6 +170,9 @@ export function StandardBifoldConfiguration()
         <div id='page-container'>
             <Topbar beforeBack={saveCoverInfo}/>
             <div id='page-content'>
+                <div className='page-title'>
+                    <h1>Enter the {standard_name} Details</h1>
+                </div>
                 <div className='container'>
                     <div className='row'>
                         <div className='mb-3 col-12 col-md-3'>

@@ -7,8 +7,10 @@ import { Customer } from '../../utilities/data_models/covers/covers';
 import { StandardBifoldCover, standard_name } from '../../covers/standard_bifold/standard_bifold';
 import { SwimSpaCover, swimspa_name } from '../../covers/swimspa/swimspa';
 import { BluecubeCover, bluecube_name } from '../../covers/bluecube/bluecube';
+import { CircularCover, circular_name } from '../../covers/circular/circular';
 
 import './build_sheet.css';
+
 
 // customer resolver
 function getCustomer()
@@ -42,6 +44,10 @@ function getCover()
     else if (cover.model === swimspa_name)
     {
         cover = SwimSpaCover.fromJson(cover);
+    }
+    else if (cover.model === circular_name)
+    {
+        cover = CircularCover.fromJson(cover);
     }
     else if (cover.model === bluecube_name)
     {

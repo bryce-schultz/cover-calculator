@@ -74,6 +74,8 @@ export class SwimSpaCover extends RectangularCover
 export function SwimSpaCoverButton()
 {
     let nav = useNav();
+    const mode = retrieve('mode');
+    const cover = retrieve('cover');
 
     const handleClick = () => 
     {
@@ -81,7 +83,13 @@ export function SwimSpaCoverButton()
     }
 
     return (
-        <button className='cover-button' onClick={handleClick}>{swimspa_name}</button>
+        <button 
+            className='cover-button' 
+            onClick={handleClick}
+            disabled={mode === 'edit' && cover.model !== swimspa_name}
+        >
+            {swimspa_name}
+        </button>
     );
 }
 
@@ -160,6 +168,9 @@ export function SwimSpaConfiguration()
         <div id='page-container'>
             <Topbar beforeBack={saveCoverInfo}/>
             <div id='page-content'>
+                <div className='page-title'>
+                    <h1>Enter the {swimspa_name} Details</h1>
+                </div>
                 <div className='container'>
                     <div className='row'>
                         <div className='mb-3 col-12 col-md-4'>

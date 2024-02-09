@@ -8,6 +8,7 @@ import SettingsButton from '../../components/settings_button/settings_button.jsx
 import { useNav } from '../../utilities/nav.js';
 
 import './home.css';
+import { save } from '../../utilities/storage.js';
 
 function Home()
 {
@@ -15,18 +16,20 @@ function Home()
 
   const openExisting = () =>
   {
-      nav('/open');
+    save('mode', 'edit');
+    nav('/open');
   }
 
-  const next = () =>
+  const newCover = () =>
   {
+    save('mode', 'new');
     nav('/customer');
   }
 
   return (
     <div id='page-container'>
       <div id='home-button-container'>
-        <LargeSquareButton onClick={ next }>
+        <LargeSquareButton onClick={ newCover }>
             <Icon icon={AddIcon} width='3em'/>
             New Cover
           </LargeSquareButton>
