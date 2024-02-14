@@ -6,6 +6,8 @@ import { RectangularCover } from '../../utilities/data_models/covers/covers';
 import { retrieve, save } from '../../utilities/storage';
 import units from '../../utilities/formatters/format_with_units';
 import { getSettings } from '../../utilities/settings/settings';
+import { drawPoly, drawLine } from '../../components/canvas/svgcanvas';
+
 import '../covers.css';
 
 // export the path
@@ -63,9 +65,26 @@ export class StandardBifoldCover extends RectangularCover
         );
     }
 
-    draw()
+    draw(svg, width, height)
     {
-        
+        if (!svg) return;
+
+        let points = [
+            [this.corner_radius, 0],
+            [this.width - this.corner_radius, 0],
+            [this.width, this.corner_radius],
+            [this.width, this.width - this.corner_radius],
+            [this.width - this.corner_radius, this.length],
+            [this.corner_radius, this.length],
+            [0, this.length - this.corner_radius],
+            [0, this.corner_radius]
+        ];
+
+        const transform = (points, amount) => points.map(point => [point[0] + amount, point[1] + amount]);
+
+        points = transform(points, 1);
+
+        drawPoly(svg, points);
     }
 }
 
@@ -75,8 +94,6 @@ export function StandardBifoldButton()
     let nav = useNav();
     const mode = retrieve('mode');
     const cover = retrieve('cover');
-
-    console.log(mode, cover);
 
     const handleClick = () => 
     {

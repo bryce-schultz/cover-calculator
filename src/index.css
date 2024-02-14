@@ -193,7 +193,7 @@ code
   background-color: var(--background-primary);
 
   overflow-y: auto;
-  overflow-x: none;
+  overflow-x: hidden;
 }
 
 .p80-width
@@ -508,4 +508,14 @@ input[type=number]::-webkit-outer-spin-button
 {
   margin-bottom: 1rem;
   font-size: 2rem;
+}
+
+.flipped-vertically
+{
+  transform: scaleY(-1);
+}
+
+.flipped-horizontally
+{
+  transform: scaleX(-1);
 }

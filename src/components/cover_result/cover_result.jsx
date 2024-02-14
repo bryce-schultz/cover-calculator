@@ -11,7 +11,7 @@ export default function CoverResult({
 {
   const openBuildsheet = () =>
   {
-    alert('This opens the build sheet');
+    console.log(cover);
   }
 
   return (

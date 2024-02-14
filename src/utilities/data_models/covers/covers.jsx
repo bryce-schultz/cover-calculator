@@ -1,6 +1,8 @@
 import { React } from "react";
 import './covers.css';
 
+import { drawLine } from '../../../components/canvas/svgcanvas';
+
 export class BuildSheet
 {
 }
@@ -61,6 +63,9 @@ export class Cover
         this.color = color;
         this.in_ground = in_ground;
         this.purchase_date = new Date();
+
+        // bind draw method to this object
+        this.draw = this.draw.bind(this);
     }
 
     static fromJson(cover)
@@ -70,11 +75,14 @@ export class Cover
         return result;
     }
 
-    draw()
+    draw(svg, width, height)
     {
-        return (
-            <div id='unimplemented-cover-drawing'>Drawing this cover is not supported yet.</div>
-        );
+        if (svg === undefined) return;
+
+        console.log(this);
+
+        drawLine(svg, 0, 0, width, height);
+        drawLine(svg, 0, height, width, 0);
     }
 }
 

@@ -14,8 +14,7 @@ export const getSettings = () =>
     {
         settings = defaultSettings;
     }
-
-    console.log(settings);
+    
     return settings;
 }
 
