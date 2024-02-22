@@ -19,13 +19,13 @@
 // radius = 10
 //
 // corner = 10 / sqrt(2)
-// corner = 10 / 1.414
-// corner = 7.07
+// corner = 10 / 1.41421356237
+// corner = 7.07...
 //
 export function calcCorner(radius)
 {
     const sqrt2 = 1.41421356237;
-    return (radius/ sqrt2);
+    return (radius / sqrt2);
 }
 //*********************************************************
 
