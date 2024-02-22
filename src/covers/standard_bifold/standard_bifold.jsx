@@ -139,8 +139,8 @@ export class StandardBifoldCover extends RectangularCover
             [coupler_length, complimentary_width]
         ];
 
-        const coupler = drawPoly(svg, applyScale(coupler_points, scale), this.color, 'black');
-        const complimentary = drawPoly(svg, applyScale(complimentary_points, scale), this.color, 'black');
+        const coupler = drawPoly(svg, applyScale(coupler_points, scale), 'transparent', 'black');
+        const complimentary = drawPoly(svg, applyScale(complimentary_points, scale), 'transparent', 'black');
 
         if (corner > 0)
             drawText(svg, corner * scale / 2, corner * scale / 2 + font_size + 2, `${units(this.corner_radius)}`, 'black', font_size, 'Arial');
