@@ -6,9 +6,10 @@ import { RectangularCover } from '../../utilities/data_models/covers/covers';
 import { retrieve, save } from '../../utilities/storage';
 import units from '../../utilities/formatters/format_with_units';
 import { getSettings } from '../../utilities/settings/settings';
-import { drawPoly, drawLine } from '../../components/canvas/svgcanvas';
+import { drawPoly, drawLine, drawText } from '../../components/canvas/svgcanvas';
 
 import '../covers.css';
+import { applyScale, calcCorner } from '../../utilities/utils';
 
 // export the path
 export const standard_path = '/standard_bifold';
@@ -43,6 +44,23 @@ export class StandardBifoldCover extends RectangularCover
 
     getInfo()
     {
+        const corner = calcCorner(this.corner_radius);
+        const font_size = 12;
+
+        const bubble_thickness = 0.125;
+        const double_bubble_thickness = 0.25;
+
+        const frame_length = this.length - (2 * bubble_thickness + 2 * double_bubble_thickness);
+        const frame_width = this.width - (2 * double_bubble_thickness);
+
+        const size_difference = this.size_difference + 3.5;
+
+        const coupler_width = frame_width;
+        const coupler_length = (frame_length / 2) + size_difference;
+
+        const complimentary_width = frame_width;
+        const complimentary_length = (frame_length / 2) - size_difference;
+
         return (
             <div>
                 <div>
@@ -57,8 +75,21 @@ export class StandardBifoldCover extends RectangularCover
                     <div>
                         <strong>Width &times; Length, Corner Radius:</strong> { units(this.width) } &times; { units(this.length) }, { units(this.corner_radius) }
                     </div>
+                    { 
+                        this.size_difference > 0 &&
+                        <div>
+                            <strong>Size Difference:</strong> { units(this.size_difference) }
+                        </div>
+                    }
+                    <br/>
                     <div>
-                        <strong>Size Difference:</strong> { units(this.size_difference) }
+                        <strong>Coupler Length:</strong> { units(coupler_length) }
+                    </div>
+                    <div>
+                        <strong>Complimentary Length:</strong> { units(complimentary_length) }
+                    </div>
+                    <div>
+                        <strong>Frame Width:</strong> { units(coupler_width) }
                     </div>
                 </div>
             </div>
@@ -69,22 +100,54 @@ export class StandardBifoldCover extends RectangularCover
     {
         if (!svg) return;
 
-        let points = [
-            [this.corner_radius, 0],
-            [this.width - this.corner_radius, 0],
-            [this.width, this.corner_radius],
-            [this.width, this.width - this.corner_radius],
-            [this.width - this.corner_radius, this.length],
-            [this.corner_radius, this.length],
-            [0, this.length - this.corner_radius],
-            [0, this.corner_radius]
+        const corner = calcCorner(this.corner_radius);
+        const font_size = 12;
+
+        const bubble_thickness = 0.125;
+        const double_bubble_thickness = 0.25;
+
+        const frame_length = this.length - (2 * bubble_thickness + 2 * double_bubble_thickness);
+        const frame_width = this.width - (2 * double_bubble_thickness);
+
+        const size_difference = this.size_difference + 3.5;
+
+        const scale = Math.min(width / frame_length, height / frame_width);
+
+        const coupler_width = frame_width;
+        const coupler_length = (frame_length / 2) + size_difference;
+
+        const complimentary_width = frame_width;
+        const complimentary_length = (frame_length / 2) - size_difference;
+
+        // coupler side
+        const coupler_points = [
+            [corner, 0],
+            [coupler_length, 0],
+            [coupler_length, coupler_width],
+            [corner, coupler_width],
+            [0, coupler_width - corner],
+            [0, corner]
         ];
 
-        const transform = (points, amount) => points.map(point => [point[0] + amount, point[1] + amount]);
+        // complimentary side
+        const complimentary_points = [
+            [coupler_length, 0],
+            [frame_length - corner, 0],
+            [frame_length, corner],
+            [frame_length, complimentary_width - corner],
+            [frame_length - corner, complimentary_width],
+            [coupler_length, complimentary_width]
+        ];
 
-        points = transform(points, 1);
+        const coupler = drawPoly(svg, applyScale(coupler_points, scale), this.color, 'black');
+        const complimentary = drawPoly(svg, applyScale(complimentary_points, scale), this.color, 'black');
 
-        drawPoly(svg, points);
+        if (corner > 0)
+            drawText(svg, corner * scale / 2, corner * scale / 2 + font_size + 2, `${units(this.corner_radius)}`, 'black', font_size, 'Arial');
+        drawText(svg, coupler_length * scale / 2, font_size + 2, `${units(coupler_length - corner)}`, 'black', font_size, 'Arial');
+        drawText(svg, coupler_length * scale + (complimentary_length * scale / 2), font_size + 2, `${units(complimentary_length - corner)}`, 'black', font_size, 'Arial');
+        drawText(svg, 2, coupler_width * scale / 2, `${units(coupler_width - 2 * corner)}`, 'black', font_size, 'Arial');
+        drawText(svg, coupler_length * scale + 2, coupler_width * scale / 2, `${units(frame_width)}`, 'black', font_size, 'Arial');
     }
 }
 

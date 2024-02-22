@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { retrieve } from '../../utilities/storage';
 import Topbar, { TopbarButton } from '../../components/topbar/topbar';
 import { Customer } from '../../utilities/data_models/covers/covers';
@@ -60,6 +60,7 @@ function getCover()
 export default function BuildSheet()
 {
     const [scale, setScale] = useState(Number(retrieve('scale')) || 100);
+    const notesRef = useRef(null);
 
     const cover = getCover();
     const customer = getCustomer();
@@ -73,6 +74,23 @@ export default function BuildSheet()
     {
         
     }
+
+    const saveNotes = () =>
+    {
+        let notes = notesRef.current.innerText;
+        save('notes', notes);
+    }
+
+    useEffect(() =>
+    {
+        if (notesRef.current === null) return;
+        
+        let notes = retrieve('notes');
+        if (notes !== null)
+        {
+            notesRef.current.innerText = notes;
+        }
+    }, []);
 
     useEffect(() => 
     {
@@ -89,7 +107,7 @@ export default function BuildSheet()
 
     return (
         <div id='page-container'>
-            <Topbar>
+            <Topbar beforeBack={saveNotes}>
                 <TopbarButton onClick={printPage} tooltip="Print">
                     <span className="material-symbols-outlined">
                         print
@@ -131,7 +149,7 @@ export default function BuildSheet()
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td>{cover !== null && cover.getInfo()}</td>
+                                        <td id='build-sheet-cover-info'>{cover !== null && cover.getInfo()}</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -149,7 +167,7 @@ export default function BuildSheet()
                             <div id='build-sheet-notes-title'>
                                 Notes:
                                 </div>  
-                            <div id='build-sheet-notes' contentEditable='true'>
+                            <div ref={notesRef} id='build-sheet-notes' contentEditable='true'>
                                 { /* Editable notes area */ }
                             </div>
                         </div>

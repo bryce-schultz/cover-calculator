@@ -101,6 +101,11 @@
     outline: 1px solid var(--text-muted);
 }
 
+#build-sheet-cover-info
+{
+    font-size: 10pt;
+}
+
 @media print
 {
     #build-sheet-paper
