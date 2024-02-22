@@ -24,7 +24,8 @@
 //
 export function calcCorner(radius)
 {
-    return (radius/ Math.sqrt(2));
+    const sqrt2 = 1.41421356237;
+    return (radius/ sqrt2);
 }
 //*********************************************************
 
