@@ -6,7 +6,7 @@ import { RectangularCover } from '../../utilities/data_models/covers/covers';
 import { retrieve, save } from '../../utilities/storage';
 import units from '../../utilities/formatters/format_with_units';
 import { getSettings } from '../../utilities/settings/settings';
-import { drawPoly, drawLine, drawText } from '../../components/canvas/svgcanvas';
+import { drawPoly, drawText } from '../../components/canvas/svgcanvas';
 
 import '../covers.css';
 import { applyScale, calcCorner } from '../../utilities/utils';
@@ -44,21 +44,12 @@ export class StandardBifoldCover extends RectangularCover
 
     getInfo()
     {
-        const corner = calcCorner(this.corner_radius);
-        const font_size = 12;
-
         const bubble_thickness = 0.125;
         const double_bubble_thickness = 0.25;
-
         const frame_length = this.length - (2 * bubble_thickness + 2 * double_bubble_thickness);
         const frame_width = this.width - (2 * double_bubble_thickness);
-
         const size_difference = this.size_difference + 3.5;
-
-        const coupler_width = frame_width;
         const coupler_length = (frame_length / 2) + size_difference;
-
-        const complimentary_width = frame_width;
         const complimentary_length = (frame_length / 2) - size_difference;
 
         return (
@@ -89,7 +80,7 @@ export class StandardBifoldCover extends RectangularCover
                         <strong>Complimentary Length:</strong> { units(complimentary_length) }
                     </div>
                     <div>
-                        <strong>Frame Width:</strong> { units(coupler_width) }
+                        <strong>Frame Width:</strong> { units(frame_width) }
                     </div>
                 </div>
             </div>
@@ -139,15 +130,43 @@ export class StandardBifoldCover extends RectangularCover
             [coupler_length, complimentary_width]
         ];
 
-        const coupler = drawPoly(svg, applyScale(coupler_points, scale), 'transparent', 'black');
-        const complimentary = drawPoly(svg, applyScale(complimentary_points, scale), 'transparent', 'black');
+        // draw the frame
+        drawPoly(svg, applyScale(coupler_points, scale), 'transparent', 'black');
+        drawPoly(svg, applyScale(complimentary_points, scale), 'transparent', 'black');
 
+        // draw the text
+        // corner radius text
         if (corner > 0)
-            drawText(svg, corner * scale / 2, corner * scale / 2 + font_size + 2, `${units(this.corner_radius)}`, 'black', font_size, 'Arial');
-        drawText(svg, coupler_length * scale / 2, font_size + 2, `${units(coupler_length - corner)}`, 'black', font_size, 'Arial');
-        drawText(svg, coupler_length * scale + (complimentary_length * scale / 2), font_size + 2, `${units(complimentary_length - corner)}`, 'black', font_size, 'Arial');
-        drawText(svg, 2, coupler_width * scale / 2, `${units(coupler_width - 2 * corner)}`, 'black', font_size, 'Arial');
-        drawText(svg, coupler_length * scale + 2, coupler_width * scale / 2, `${units(frame_width)}`, 'black', font_size, 'Arial');
+        {
+            drawText(svg,                               // svg
+                corner * scale / 2,                     // x
+                corner * scale / 2 + font_size + 2,     // y
+                `${units(this.corner_radius)}`);        // text
+        }
+
+        // coupler length text
+        drawText(svg, 
+            coupler_length * scale / 2, 
+            font_size + 2, 
+            `${units(coupler_length - corner)}`);
+        
+        // complimentary length text
+        drawText(svg, 
+            coupler_length * scale + (complimentary_length * scale / 2), 
+            font_size + 2, 
+            `${units(complimentary_length - corner)}`);
+        
+        // back rail width text
+        drawText(svg, 
+            2, 
+            coupler_width * scale / 2, 
+            `${units(coupler_width - 2 * corner)}`);
+
+        // front rail width text
+        drawText(svg, 
+            coupler_length * scale + 2, 
+            coupler_width * scale / 2, 
+            `${units(frame_width)}`);
     }
 }
 
