@@ -6,7 +6,8 @@ import '../covers.css';
 import { RectangularCover } from "../../utilities/data_models/covers/covers";
 import { retrieve, save } from "../../utilities/storage";
 import units from "../../utilities/formatters/format_with_units";
-import { getSettings } from "../../utilities/settings/settings";
+import { drawPoly, drawText } from '../../components/canvas/svgcanvas';
+import { applyScale } from '../../utilities/utils';
 
 // export the path
 export const bluecube_path = "/bluecube";
@@ -53,9 +54,71 @@ export class BluecubeCover extends RectangularCover
         );
     }
 
-    draw()
+    draw(svg, width, height)
     {
+        if (!svg) return;
+
+        const font_size = 12;
+
+        const bubble_thickness = 0.125;
+        const double_bubble_thickness = 0.25;
+
+        const frame_length = this.length - (2 * bubble_thickness + 2 * double_bubble_thickness);
+        const frame_width = this.width - (2 * double_bubble_thickness);
+
+        const size_difference = 3.5/2;
+
+        const scale = Math.min(width / frame_length, height / frame_width);
+
+        const coupler_width = frame_width;
+        const coupler_length = (frame_length / 2) + size_difference;
+
+        const complimentary_length = (frame_length / 2) - size_difference;
+
+        // coupler side
+        const coupler_points = [
+            [1, 1],
+            [coupler_length, 1],
+            [coupler_length, coupler_width],
+            [1, coupler_width],
+            [1, coupler_width]
+        ];
+
+        // complimentary side
+        const complimentary_points = [
+            [coupler_length, 1],
+            [coupler_length + complimentary_length - 2, 1],
+            [coupler_length + complimentary_length - 2, coupler_width],
+            [coupler_length, coupler_width]
+        ];
+
+        // draw the frame
+        drawPoly(svg, applyScale(coupler_points, scale), 'transparent', 'black');
+        drawPoly(svg, applyScale(complimentary_points, scale), 'transparent', 'black');
+
+        // coupler length text
+        drawText(svg, 
+            coupler_length * scale / 2, 
+            font_size + 6, 
+            `${units(coupler_length)}`);
         
+        // complimentary length text
+        drawText(svg, 
+            coupler_length * scale + (complimentary_length * scale / 2), 
+            font_size + 6, 
+            `${units(complimentary_length)}`);
+        
+        // back rail width text
+        drawText(svg, 
+            8, 
+            coupler_width * scale / 2, 
+            `${units(coupler_width)}`);
+
+        // front rail width text
+        drawText(svg, 
+            coupler_length * scale + 2, 
+            coupler_width * scale / 2, 
+            `${units(frame_width)}`);
     }
 }
 
@@ -87,6 +150,10 @@ export function BluecubeConfiguration()
 {
     const nav = useNav();
 
+    // in inches
+    const width = 37.5;
+    const length = 92.5;
+
     const [color, setColor] = useState('');
 
     const clear = () =>
@@ -108,25 +175,12 @@ export function BluecubeConfiguration()
 
     const saveCoverInfo = () =>
     {
-        // in inches
-        let width = 37.5;
-        let length = 92.5;
-
-        // convert to metric if necessary
-        if (getSettings().units === 'metric')
-        {
-            width = width * 2.54;
-            length = length * 2.54;
-        }
-
         let cover = new BluecubeCover(
             width, 
             length, 
             0, 
             false, 
             color === "" ? "None" : color);
-
-        
 
         save('cover', cover);
     }
@@ -150,6 +204,15 @@ export function BluecubeConfiguration()
                     <h1>Enter the {bluecube_name} Details</h1>
                 </div>
                 <div className='container'>
+                    <div className='row'>
+                        <div className='mb-3 col-12'>
+                            <label htmlFor='ux-size-option-picker' className='form-label'>Sizes</label>
+                            <div id='ux-size-option-picker'>
+                                <button className='ux-size-option-button active'>{ units(width) } &times; { units(length) }</button>
+                            </div>
+                        </div>
+                    </div>
+
                     <div className='row'>
                         <div className='mb-3 col-12'>
                             <label htmlFor='ux-color-picker' className='form-label'>Color</label>

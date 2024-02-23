@@ -71,3 +71,28 @@
 {
     color: var(--text-muted);
 }
+
+#ux-size-option-picker
+{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.ux-size-option-button
+{
+    flex: 1 0 1;
+    padding: 1rem;
+    cursor: pointer;
+    border: none;
+    border-radius: 4px;
+    background-color: var(--background-secondary);
+    color: var(--text-muted);
+
+    font-size: 1.5rem;
+}
+
+.ux-size-option-button.active
+{
+    border: 1px solid var(--background-accent);
+}

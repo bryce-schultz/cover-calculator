@@ -7,9 +7,9 @@ import { retrieve, save } from '../../utilities/storage';
 import units from '../../utilities/formatters/format_with_units';
 import { getSettings } from '../../utilities/settings/settings';
 import { drawPoly, drawText } from '../../components/canvas/svgcanvas';
-
-import '../covers.css';
 import { applyScale, calcCorner } from '../../utilities/utils';
+import '../covers.css';
+
 
 // export the path
 export const standard_path = '/standard_bifold';
@@ -100,7 +100,7 @@ export class StandardBifoldCover extends RectangularCover
         const frame_length = this.length - (2 * bubble_thickness + 2 * double_bubble_thickness);
         const frame_width = this.width - (2 * double_bubble_thickness);
 
-        const size_difference = this.size_difference + 3.5;
+        const size_difference = this.size_difference + (3.5 / 2);
 
         const scale = Math.min(width / frame_length, height / frame_width);
 
@@ -112,22 +112,22 @@ export class StandardBifoldCover extends RectangularCover
 
         // coupler side
         const coupler_points = [
-            [corner, 0],
-            [coupler_length, 0],
-            [coupler_length, coupler_width],
-            [corner, coupler_width],
-            [0, coupler_width - corner],
-            [0, corner]
+            [corner + 1, 1],
+            [coupler_length, 1],
+            [coupler_length, coupler_width - 1],
+            [corner + 1, coupler_width - 1],
+            [1, coupler_width - corner - 1],
+            [1, corner + 1]
         ];
 
         // complimentary side
         const complimentary_points = [
-            [coupler_length, 0],
-            [frame_length - corner, 0],
-            [frame_length, corner],
-            [frame_length, complimentary_width - corner],
-            [frame_length - corner, complimentary_width],
-            [coupler_length, complimentary_width]
+            [coupler_length, 1],
+            [frame_length - corner, 1],
+            [frame_length, corner + 1],
+            [frame_length, complimentary_width - corner - 1],
+            [frame_length - corner, complimentary_width - 1],
+            [coupler_length, complimentary_width - 1]
         ];
 
         // draw the frame
@@ -139,26 +139,26 @@ export class StandardBifoldCover extends RectangularCover
         if (corner > 0)
         {
             drawText(svg,                               // svg
-                corner * scale / 2,                     // x
-                corner * scale / 2 + font_size + 2,     // y
+                corner * scale / 2 + 6,                 // x
+                corner * scale / 2 + font_size + 4,     // y
                 `${units(this.corner_radius)}`);        // text
         }
 
         // coupler length text
         drawText(svg, 
             coupler_length * scale / 2, 
-            font_size + 2, 
+            font_size + 8, 
             `${units(coupler_length - corner)}`);
         
         // complimentary length text
         drawText(svg, 
             coupler_length * scale + (complimentary_length * scale / 2), 
-            font_size + 2, 
+            font_size + 8, 
             `${units(complimentary_length - corner)}`);
         
         // back rail width text
         drawText(svg, 
-            2, 
+            8, 
             coupler_width * scale / 2, 
             `${units(coupler_width - 2 * corner)}`);
 
