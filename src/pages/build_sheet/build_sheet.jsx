@@ -63,6 +63,7 @@ export default function BuildSheet()
 {
     const [scale, setScale] = useState(Number(retrieve('scale')) || 100);
     const notesRef = useRef(null);
+    const successToastRef = useRef(null);
 
     const cover = getCover();
     const customer = getCustomer();
@@ -76,6 +77,18 @@ export default function BuildSheet()
     {
         await addCustomer(customer);
         await addCover(customer, cover);
+
+        successToastRef.current.style.visibility = 'visible';
+
+        setTimeout(() =>
+        {
+            successToastRef.current.style.visibility = 'hidden';
+        }, 3000);
+    }
+
+    const hideToast = () =>
+    {
+        successToastRef.current.style.visibility = 'hidden';
     }
 
     const saveNotes = () =>
@@ -110,6 +123,15 @@ export default function BuildSheet()
 
     return (
         <div id='page-container'>
+            <div ref={successToastRef} class="toast-message">
+                <div class="d-flex">
+                    <div class="toast-body">
+                        Saved Successfully.
+                    </div>
+                    <button onClick={hideToast} type="button" class="btn-close btn-close-white ms-2 m-auto"></button>
+                </div>
+            </div>
+
             <Topbar beforeBack={saveNotes}>
                 <TopbarButton onClick={printPage} tooltip="Print">
                     <span className="material-symbols-outlined">

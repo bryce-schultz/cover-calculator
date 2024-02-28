@@ -24,8 +24,13 @@ export default function SearchResult(
     if (covers.length !== 0)
     {
       setCoversOpen(true);
-      setStyle({ maxHeight: '100%' });
+      setStyle({ maxHeight: 'none' });
     }
+
+    covers.sort((first, second) =>
+    {
+      return new Date(second.purchase_date) - new Date(first.purchase_date);
+    });
 
     let items = covers.map((cover) =>
       <CoverResult
@@ -71,7 +76,11 @@ export default function SearchResult(
             </div>
           </div>
           <div className='info-section location-info-section'>
-            { customer.address } { customer.city }, { customer.state }. { customer.zipcode }
+            { customer.address != '' &&
+              <>
+                { customer.address } { customer.city }, { customer.state }. { customer.zipcode }
+              </>
+            } 
           </div>
           <div className='button-section'>
             { button }

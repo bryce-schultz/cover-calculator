@@ -66,3 +66,22 @@ export function distance(point1, point2)
     return Math.sqrt(Math.pow(point2[0] - point1[0], 2) + Math.pow(point2[1] - point1[1], 2));
 }
 //*********************************************************
+
+
+//*********************************************************
+// elapsedDays
+//
+// Calculate the number of days between two dates.
+//
+// Example:
+// date1 = new Date('2024-02-28')
+// date2 = new Date('2024-03-01')
+//
+// days = (date2 - date1) / (1000 * 60 * 60 * 24)
+// days = (86400000) / (1000 * 60 * 60 * 24)
+// days = 1
+//
+export function elapsedDays(date1, date2)
+{
+    return Math.round((new Date(date2) - new Date(date1)) / (1000 * 60 * 60 * 24));
+}
