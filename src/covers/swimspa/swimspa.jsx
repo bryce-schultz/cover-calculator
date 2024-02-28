@@ -6,6 +6,8 @@ import { RectangularCover } from '../../utilities/data_models/covers/covers';
 import { retrieve, save } from '../../utilities/storage';
 import units from '../../utilities/formatters/format_with_units';
 import '../covers.css';
+import { drawPoly, drawText } from '../../components/canvas/svgcanvas';
+import { applyScale, calcCorner } from '../../utilities/utils';
 
 // export the path
 export const swimspa_path = '/swimspa';
@@ -64,9 +66,96 @@ export class SwimSpaCover extends RectangularCover
         );
     }
 
-    draw()
+    draw(svg, width, height)
     {
-        
+        if (!svg) return;
+
+        const corner = calcCorner(this.corner_radius);
+        const font_size = 12;
+
+        const double_bubble_thickness = 0.25;
+
+        const frame_length = this.length - (2*double_bubble_thickness*this.panel_count);
+        const frame_width = this.width - (2 * double_bubble_thickness);
+        const panel_length = frame_length / this.panel_count;
+
+        const scale = Math.min(width / frame_length, height / frame_width);
+
+        for (let i = 0; i < this.panel_count; i++)
+        {
+            let points = [];
+            
+            // first panel
+            if (i === 0)
+            {
+                points = [
+                    [corner, 0],
+                    [panel_length, 0],
+                    [panel_length, frame_width],
+                    [corner, frame_width],
+                    [0, frame_width - corner],
+                    [0, corner]
+                ];
+
+                // corner radius text
+                if (corner > 0)
+                {
+                    drawText(svg,                               // svg
+                        corner * scale / 2 + 6,                 // x
+                        corner * scale / 2 + font_size + 4,     // y
+                        `${units(this.corner_radius)}`);        // text
+                }
+
+                drawText(svg,
+                    (panel_length / 2) * scale,
+                    (font_size + 2),
+                    `${units(panel_length - corner)}`);
+
+                drawText(svg,
+                    8,
+                    (frame_width / 2) * scale,
+                    `${units(frame_width - (2 * corner))}`);
+                
+                drawText(svg,
+                    panel_length * scale + 8,
+                    (frame_width / 2) * scale,
+                    `${units(frame_width)}`);
+            }
+            // last panel
+            else if (i === this.panel_count - 1)
+            {
+                points = [
+                    [i * panel_length, 0],
+                    [(i + 1) * panel_length - corner, 0],
+                    [(i +1 ) * panel_length, corner],
+                    [(i + 1) * panel_length, frame_width - corner],
+                    [(i + 1) * panel_length - corner, frame_width],
+                    [i * panel_length, frame_width]
+                ];
+
+                drawText(svg,
+                    (i * panel_length + panel_length / 2) * scale,
+                    (font_size + 2),
+                    `${units(panel_length - corner)}`);
+            }
+            // middle panels
+            else
+            {
+                points = [
+                    [i * panel_length, 0],
+                    [(i + 1) * panel_length, 0],
+                    [(i + 1) * panel_length, frame_width],
+                    [i * panel_length, frame_width],
+                ];
+
+                drawText(svg,
+                    (i * panel_length + panel_length / 2) * scale,
+                    (font_size + 2),
+                    `${units(panel_length)}`);
+            }
+
+            drawPoly(svg, applyScale(points, scale), 'none', 'black');
+        }
     }
 }
 

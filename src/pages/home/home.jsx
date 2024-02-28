@@ -12,7 +12,7 @@ import { save } from '../../utilities/storage.js';
 
 function Home()
 {
-  let nav = useNav();
+  const nav = useNav();
 
   const openExisting = () =>
   {
@@ -23,6 +23,8 @@ function Home()
   const newCover = () =>
   {
     save('mode', 'new');
+    save('customer', null);
+    save('cover', null);
     nav('/customer');
   }
 

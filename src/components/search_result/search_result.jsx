@@ -3,10 +3,8 @@ import { Icon } from '@iconify/react';
 import userIcon from '@iconify/icons-mdi/user';
 import roundEmail from '@iconify/icons-ic/round-email';
 import { useState } from 'react';
-
 import getCovers from '../../utilities/database/get_covers.js';
 import CoverResult from '../cover_result/cover_result.jsx';
-import Cover from '../../utilities/data_models/cover.js';
 
 import './search_result.css';
 
@@ -26,13 +24,14 @@ export default function SearchResult(
     if (covers.length !== 0)
     {
       setCoversOpen(true);
-      setStyle({ maxHeight: '2000px' });
+      setStyle({ maxHeight: '100%' });
     }
 
     let items = covers.map((cover) =>
       <CoverResult
         key={cover.id}
-        cover={ new Cover({...cover}) }
+        customer={ customer }
+        cover={ cover }
       />
     );
 

@@ -9,6 +9,8 @@ import { StandardBifoldCover, standard_name } from '../../covers/standard_bifold
 import { SwimSpaCover, swimspa_name } from '../../covers/swimspa/swimspa';
 import { BluecubeCover, bluecube_name } from '../../covers/bluecube/bluecube';
 import { CircularCover, circular_name } from '../../covers/circular/circular';
+import { addCustomer } from '../../utilities/database/add_customer';
+import { addCover } from '../../utilities/database/add_cover';
 
 import './build_sheet.css';
 import SVGCanvas from '../../components/canvas/svgcanvas';
@@ -70,9 +72,10 @@ export default function BuildSheet()
         window.print();
     }
 
-    const saveToDatabase = () =>
+    const saveToDatabase = async () =>
     {
-        
+        await addCustomer(customer);
+        await addCover(customer, cover);
     }
 
     const saveNotes = () =>

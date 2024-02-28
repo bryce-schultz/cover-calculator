@@ -4,6 +4,7 @@ import { useEffect, useState, useRef } from 'react';
 import Topbar from '../../components/topbar/topbar.jsx';
 import { useNav } from '../../utilities/nav.js';
 import { retrieve, save } from '../../utilities/storage.js';
+import { getCustomersByFirstName } from '../../utilities/database/get_customers.js';
 
 export default function ConfigureCustomer()
 {
@@ -76,6 +77,7 @@ export default function ConfigureCustomer()
   const [city, setCity] = useState('');
   const [state, setState] = useState('');
   const [zipcode, setZipcode] = useState('');
+  const [search_customers, setSearchCustomers] = useState([]);
 
   const first_name_ref = useRef();
 
@@ -127,6 +129,19 @@ export default function ConfigureCustomer()
     setZipcode(customer.zipcode);
   } 
 
+  const searchForExisting = async (first_name) =>
+  {
+    setFirstName(first_name);
+    if (first_name === '') 
+    {
+      setSearchCustomers([]);
+      return;
+    }
+
+    const customers = await getCustomersByFirstName(first_name);
+    setSearchCustomers(customers);
+  }
+
   const saveCustomerInfo = () =>
   {
     const customer = 
@@ -141,6 +156,18 @@ export default function ConfigureCustomer()
     }
 
     save('customer', customer);
+  }
+
+  const populateWithCustomer = (customer) =>
+  {
+    setSearchCustomers([]);
+    setFirstName(customer.first_name || '');
+    setLastName(customer.last_name || '');
+    setEmail(customer.email || '');
+    setAddress(customer.address || '');
+    setCity(customer.city || '');
+    setState(customer.state || '');
+    setZipcode(customer.zipcode || '');
   }
 
   return (
@@ -160,10 +187,20 @@ export default function ConfigureCustomer()
                 id='ux-first-name'
                 ref={first_name_ref}
                 value={first_name} 
-                onChange={event => setFirstName(event.target.value)}
+                onChange={event => searchForExisting(event.target.value)}
               />
+              <ul className="position-absolute list-group">
+                { search_customers.map((customer, index) =>
+                  <li 
+                    key={index} 
+                    className="list-group-item" 
+                    onClick={() => { populateWithCustomer(customer); }}
+                  >
+                    <div>{customer.first_name} {customer.last_name} ({customer.email})</div>
+                  </li>
+                )}
+              </ul>
             </div>
-
             <div className='mb-3 col-12 col-md-6 col-lg-4'>
               <label htmlFor='ux-last-name' className='form-label'>Last Name</label>
               <input 

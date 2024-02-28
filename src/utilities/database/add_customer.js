@@ -5,7 +5,7 @@ import
 
 import sendAsync from './renderer';
 
-export default async function addCustomer(customer)
+export async function addCustomer(customer)
 {
     if (customer.email === '') 
     {
@@ -108,7 +108,7 @@ async function customerExists(customer)
     return (result[0][key] === 0 ? false : true);
 }
 
-export function getCustomerID(customer)
+export async function getCustomerId(customer)
 {
     const query =
     'SELECT id FROM ' +
@@ -121,13 +121,15 @@ export function getCustomerID(customer)
     ];
 
     let result =
-    sendAsync(query, args)
+    await sendAsync(query, args)
     .then
     (
         (result) => {return result}
     );
 
     const key = 'id';
+    console.log(customer, result[0]);
+    if (result[0] === undefined) return null;
     return result[0][key];
 }
 

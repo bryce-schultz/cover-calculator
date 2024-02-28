@@ -17,7 +17,7 @@ export default function OpenExisting()
   {
     let customers = await getCustomers(query);
 
-    console.log(customers);
+    if (customers === undefined) return;
     
     customers.sort((first, second) => 
     {
