@@ -76,7 +76,7 @@ export default function SearchResult(
             </div>
           </div>
           <div className='info-section location-info-section'>
-            { customer.address != '' &&
+            { customer.address !== '' &&
               <>
                 { customer.address } { customer.city }, { customer.state }. { customer.zipcode }
               </>

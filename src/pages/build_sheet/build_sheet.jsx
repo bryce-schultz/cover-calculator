@@ -82,6 +82,7 @@ export default function BuildSheet()
 
         setTimeout(() =>
         {
+            if (successToastRef.current === null) return;
             successToastRef.current.style.visibility = 'hidden';
         }, 3000);
     }
@@ -123,12 +124,12 @@ export default function BuildSheet()
 
     return (
         <div id='page-container'>
-            <div ref={successToastRef} class="toast-message">
-                <div class="d-flex">
-                    <div class="toast-body">
+            <div ref={successToastRef} className="toast-message">
+                <div className="d-flex">
+                    <div className="toast-body">
                         Saved Successfully.
                     </div>
-                    <button onClick={hideToast} type="button" class="btn-close btn-close-white ms-2 m-auto"></button>
+                    <button onClick={hideToast} type="button" className="btn-close btn-close-white ms-2 m-auto"></button>
                 </div>
             </div>
 
