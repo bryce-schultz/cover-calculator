@@ -20,7 +20,7 @@ function insertCover(id, cover)
     const query = 
     'INSERT INTO ' + 
     cover_table + 
-    '(customer_id, purchase_date, type, model, length, width, corner_radius, radius, size_difference, color, airs, in_ground) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);';
+    '(customer_id, purchase_date, type, model, length, width, corner_radius, panel_count, radius, size_difference, color, airs, in_ground) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);';
 
     const args = 
     [
@@ -31,6 +31,7 @@ function insertCover(id, cover)
         cover.length,
         cover.width,
         cover.corner_radius,
+        cover.panel_count,
         cover.radius,
         cover.size_difference,
         cover.color,

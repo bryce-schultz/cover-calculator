@@ -85,3 +85,57 @@ export function elapsedDays(date1, date2)
 {
     return Math.round((new Date(date2) - new Date(date1)) / (1000 * 60 * 60 * 24));
 }
+
+export function getCircumRadiusOfDecagon(inradius)
+{
+    const sides = 10;
+    return inradius / Math.cos(Math.PI / sides);
+}
+
+export function generateDecagonPoints(inradius, width, height) 
+{
+    const centerX = width / 2;
+    const centerY = height / 2;
+    const numPoints = 10;
+    const angleIncrement = (2 * Math.PI) / numPoints;
+    
+    const points = [];
+
+    for (let i = 0; i < numPoints; i++) {
+        const x = centerX + inradius * Math.cos(i * angleIncrement);
+        const y = centerY + inradius * Math.sin(i * angleIncrement);
+        points.push([x, y]);
+    }
+
+    points.push(points[0]);
+
+    return points;
+}
+
+export function getDecagonIntersectionPoints(decagonPoints, x1, y1, x2, y2) 
+{
+    const intersectionPoints = [];
+
+    // Iterate over each edge of the decagon
+    for (let i = 0; i < decagonPoints.length; i++) {
+        const x3 = decagonPoints[i][0];
+        const y3 = decagonPoints[i][1];
+        const x4 = decagonPoints[(i + 1) % decagonPoints.length][0];
+        const y4 = decagonPoints[(i + 1) % decagonPoints.length][1];
+
+        const denominator = (x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4);
+
+        if (denominator !== 0) {
+            const t = ((x1 - x3) * (y3 - y4) - (y1 - y3) * (x3 - x4)) / denominator;
+            const u = -((x1 - x2) * (y1 - y3) - (y1 - y2) * (x1 - x3)) / denominator;
+
+            if (t >= 0 && t <= 1 && u >= 0 && u <= 1) {
+                const intersectionX = x1 + t * (x2 - x1);
+                const intersectionY = y1 + t * (y2 - y1);
+                intersectionPoints.push([intersectionX, intersectionY]);
+            }
+        }
+    }
+
+    return intersectionPoints;
+}

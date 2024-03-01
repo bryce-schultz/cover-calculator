@@ -6,6 +6,9 @@ import { Cover } from '../../utilities/data_models/covers/covers';
 import { retrieve, save } from '../../utilities/storage';
 import units from '../../utilities/formatters/format_with_units';
 import '../covers.css';
+import { drawPoly, drawLine, drawText } from '../../components/canvas/svgcanvas';
+import { distance } from '../../utilities/utils';
+import { generateDecagonPoints, getCircumRadiusOfDecagon, getDecagonIntersectionPoints } from '../../utilities/utils';
 
 // export the path
 export const circular_path = '/circular';
@@ -37,6 +40,9 @@ export class CircularCover extends Cover
 
     getInfo()
     {
+        const circum_radius = getCircumRadiusOfDecagon(this.radius);
+        const section_width = circum_radius * 2 / this.panel_count;
+
         return (
             <div>
                 <div>
@@ -48,19 +54,84 @@ export class CircularCover extends Cover
                         </strong>
                     </div>
                     <div>
-                        <strong>Radius:</strong> { units(this.radius) }
+                        <strong>In-Radius:</strong> { units(this.radius) }
+                    </div>
+                    <div>
+                        <strong>Circum-Radius:</strong> { units(circum_radius) }
+                    </div>
+                    <div>
+                        <strong>Width:</strong> { units(this.radius * 2) }
+                    </div>
+                    <div>
+                        <strong>Length:</strong> { units(circum_radius * 2) }
                     </div>
                     <div>
                         <strong>Panel Count:</strong> { this.panel_count }
+                    </div>
+                    <div>
+                        <strong>Panel Width:</strong> { units(section_width) }
                     </div>
                 </div>
             </div>
         );
     }
 
-    draw()
+    draw(svg, width, height)
     {
-        
+        if (!svg) return;
+
+        const decagon_width = getCircumRadiusOfDecagon(this.radius) * 2;
+
+        const scale = width / decagon_width;
+
+        const circum_radius = getCircumRadiusOfDecagon(this.radius * scale);
+
+        const points = generateDecagonPoints(circum_radius, width, height);
+
+        for (let i = 0; i < points.length - 1; i++)
+        {
+            let x1 = points[i][0];
+            let y1 = points[i][1];
+            let x2 = points[i + 1][0];
+            let y2 = points[i + 1][1];
+            
+            let mid = [(x1 + x2) / 2, (y1 + y2) / 2];
+
+            drawText(svg, mid[0], mid[1], units(distance(points[i], points[i + 1]) / scale));
+        }
+
+        const section_width = circum_radius * 2 / this.panel_count;
+    
+        for (let i = 1; i < this.panel_count; i++) 
+        {
+            let x = i * section_width;
+            let y1 = 0;
+            let y2 = height;
+
+            let intersectionPoints = getDecagonIntersectionPoints(points, x, y1, x, y2);
+
+            if (intersectionPoints.length === 2)
+            {
+                const x1 = intersectionPoints[0][0];
+                const y1 = intersectionPoints[0][1];
+                const x2 = intersectionPoints[1][0];
+                const y2 = intersectionPoints[1][1];
+                
+                const p1 = [x1, y1];
+                const p2 = [x2, y2];
+
+                const midY = (y1 + y2) / 2;
+
+                drawLine(svg, x1, y1, x2, y2);
+                drawText(svg, x1 + 4, midY, units(distance(p1, p2) / scale));
+            }
+            else
+            {
+                console.log('Error: Intersection points not found');
+            }
+        }
+
+        drawPoly(svg, points, 'transparent');
     }
 }
 

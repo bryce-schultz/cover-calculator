@@ -93,6 +93,7 @@ const tables =
             length          INTEGER,                                                        \
             width           INTEGER,                                                        \
             corner_radius   INTEGER,                                                        \
+            panel_count     INTEGER,                                                        \
             radius          INTEGER,                                                        \
             size_difference INTEGER,                                                        \
             color           TEXT    DEFAULT mineral,                                        \
@@ -151,42 +152,9 @@ VALUES (\
     0 \
 );';
 
-const insert_test_cover = 
-'INSERT OR REPLACE INTO covers (\
-    customer_id,\
-    purchase_date,\
-    type,\
-    model,\
-    length,\
-    width,\
-    corner_radius,\
-    radius,\
-    size_difference,\
-    color,\
-    airs,\
-    in_ground,\
-    id\
-)\
-VALUES (\
-    0,\
-    \'2021-03-24\',\
-    \'standard\',\
-    \'bifold\',\
-    80,\
-    80,\
-    6,\
-    0,\
-    3,\
-    \'mineral\',\
-    0,\
-    0,\
-    0\
-);';
-
 // Create the tables if they don't exist.
 database.exec(tables.customers.create);
 database.exec(tables.covers.create);
 
 // Insert a test user and cover.
 database.exec(insert_test_user);
-database.exec(insert_test_cover);
