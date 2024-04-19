@@ -6,29 +6,17 @@
   "private": true,
   "main": "public/electron.js",
   "homepage": "./",
-  "dependencies": {
-    "@iconify/icons-bi": "^1.2.13",
-    "@iconify/icons-ic": "^1.2.11",
-    "@iconify/icons-material-symbols": "^1.2.25",
-    "@iconify/icons-mdi": "^1.2.36",
-    "@iconify/react": "^4.0.1",
-    "@testing-library/jest-dom": "^5.17.0",
-    "@testing-library/react": "^13.4.0",
-    "@testing-library/user-event": "^13.5.0",
-    "electron-is-dev": "^2.0.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-router-dom": "^6.6.1",
-    "react-scripts": "5.0.1",
-    "sqlite3": "^5.1.6",
-    "web-vitals": "^2.1.4"
-  },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "",
     "build": "react-scripts build",
-    "dev": "concurrently --kill-others \"cross-env BROWSER=none npm start\" \"wait-on http://localhost:3000/ && electron .\"",
+    "dev": "concurrently --kill-others \"cross-env BROWSER=none react-scripts start\" \"wait-on http://localhost:3000/ && electron .\"",
     "package": "npm run build && electron-builder -w -c.extraMetadata.main=build/electron.js",
     "postinstall": "electron-builder install-app-deps"
+  },
+  "build": {
+    "productName": "Cover Calculator",
+    "icon": "public/favicon.ico",
+    "artifactName": "Cover Calculator Setup.${ext}"
   },
   "eslintConfig": {
     "extends": [
@@ -47,6 +35,23 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "dependencies": {
+    "@iconify/icons-bi": "^1.2.13",
+    "@iconify/icons-ic": "^1.2.11",
+    "@iconify/icons-material-symbols": "^1.2.25",
+    "@iconify/icons-mdi": "^1.2.36",
+    "@iconify/react": "^4.0.1",
+    "@testing-library/jest-dom": "^5.17.0",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^13.5.0",
+    "electron-is-dev": "^2.0.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.6.1",
+    "react-scripts": "5.0.1",
+    "sqlite3": "^5.1.6",
+    "web-vitals": "^2.1.4"
   },
   "devDependencies": {
     "concurrently": "^8.2.1",

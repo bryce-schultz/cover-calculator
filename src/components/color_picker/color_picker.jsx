@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import './color_picker.css';
 
 export default function ColorPicker({ value, onChange })
@@ -10,8 +10,7 @@ export default function ColorPicker({ value, onChange })
     const forestRef = useRef(null);
     const customRef = useRef(null);
     const customInputRef = useRef(null);
-
-    const [ivalue, setIValue] = useState('');
+    const previousValue = value;
 
     const clear = () =>
     {
@@ -24,43 +23,42 @@ export default function ColorPicker({ value, onChange })
         customInputRef.current.value = '';
     }
 
-    useEffect(() =>
+    const change = (value) =>
     {
-        if (value === undefined || value === null || value === 'None') return;
+        if (onChange === undefined || onChange === null) return;
+        if (typeof onChange !== 'function') return;
 
-        if (value === '') 
-        {
-            clear();
-            return;
-        }
+        if (value === previousValue) return;
 
-        setIValue(value);
-
-    }, [value]);
+        clear();
+        onChange(value);
+    }
 
     useEffect(() => 
     {
-        if (ivalue === 'Mineral')
+        if (value === undefined || value === null || value === '') return;
+
+        if (value === 'Mineral')
         {
             clear();
             mineralRef.current.classList.add('active');
         }
-        else if (ivalue === 'Dove')
+        else if (value === 'Dove')
         {
             clear();
             doveRef.current.classList.add('active');
         }
-        else if (ivalue === 'Cinnamon')
+        else if (value === 'Cinnamon')
         {
             clear();
             cinnamonRef.current.classList.add('active');
         }
-        else if (ivalue === 'Mink')
+        else if (value === 'Mink')
         {
             clear();
             minkRef.current.classList.add('active');
         }
-        else if (ivalue === 'Forest')
+        else if (value === 'Forest')
         {
             clear();
             forestRef.current.classList.add('active');
@@ -69,14 +67,9 @@ export default function ColorPicker({ value, onChange })
         {
             clear();
             customRef.current.classList.add('active');
-            customInputRef.current.value = ivalue;
+            customInputRef.current.value = value;
         }
-
-        if (onChange !== undefined)
-        {
-            onChange(ivalue);
-        }
-    }, [ivalue]);
+    });
 
     return (
         <div className='color-picker-container container'>
@@ -84,7 +77,7 @@ export default function ColorPicker({ value, onChange })
                 <div 
                     ref={mineralRef}
                     className='col-12 col-md-2 color-picker-color mineral'
-                    onClick={ () => setIValue('Mineral') }
+                    onClick={ () => change('Mineral') }
                 >
                     Mineral
                 </div>
@@ -92,7 +85,7 @@ export default function ColorPicker({ value, onChange })
                 <div
                     ref={doveRef} 
                     className='col-12 col-md-2 color-picker-color dove'
-                    onClick={ () => setIValue('Dove') }
+                    onClick={ () => change('Dove') }
                 >
                     Dove
                 </div>
@@ -100,7 +93,7 @@ export default function ColorPicker({ value, onChange })
                 <div 
                     ref={cinnamonRef}
                     className='col-12 col-md-2 color-picker-color cinnamon'
-                    onClick={ () => setIValue('Cinnamon') }
+                    onClick={ () => change('Cinnamon') }
                 >
                     Cinnamon
                 </div>
@@ -108,7 +101,7 @@ export default function ColorPicker({ value, onChange })
                 <div
                     ref={minkRef} 
                     className='col-12 col-md-2 color-picker-color mink'
-                    onClick={ () => setIValue('Mink') }
+                    onClick={ () => change('Mink') }
                 >
                     Mink
                 </div>
@@ -116,7 +109,7 @@ export default function ColorPicker({ value, onChange })
                 <div 
                     ref={forestRef}
                     className='col-12 col-md-2 color-picker-color forest'
-                    onClick={ () => setIValue('Forest') }
+                    onClick={ () => change('Forest') }
                 >
                     Forest
                 </div>
@@ -127,7 +120,7 @@ export default function ColorPicker({ value, onChange })
                     >
                     <div>
                         <label>Custom</label>
-                        <input ref={customInputRef} type='text' onChange={ (event) => setIValue(event.target.value) } className='form-control'></input>
+                        <input ref={customInputRef} type='text' onChange={ (event) => change(event.target.value) } className='form-control'></input>
                     </div>
                 </div>
             </div>

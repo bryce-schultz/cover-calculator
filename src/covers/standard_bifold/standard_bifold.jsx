@@ -10,7 +10,6 @@ import { drawPoly, drawText } from '../../components/canvas/svgcanvas';
 import { applyScale, calcCorner } from '../../utilities/utils';
 import '../covers.css';
 
-
 // export the path
 export const standard_path = '/standard_bifold';
 export const standard_name = 'Standard Bifold';
