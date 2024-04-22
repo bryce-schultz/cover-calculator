@@ -4,6 +4,7 @@ const isDev = require('electron-is-dev');
 const { ipcMain } = require('electron');
 const sqlite3 = require('sqlite3').verbose();
 const fs = require('fs');
+const { dialog } = require('electron');
 
 const icon_path = path.join(__dirname, 'favicon.ico');
 
@@ -162,23 +163,25 @@ const tables =
 }
 
 // Create the tables if they don't exist.
-database.exec(tables.customers.create, (err) => 
+database.exec(tables.customers.create, (error) => 
 {
     // If there was an error, log it and exit the process, this is fatal.
-    if (err)
+    if (error)
     {
-        console.log("Error creating customers table:\n", err);
-        process.exit(1);
+        console.log("Error creating customers table:\n", error);
+        dialog.showErrorBox('Error', 'Could not create customers table.') ;
+        app.quit();
     }
 });
 
-database.exec(tables.covers.create, (err) => 
+database.exec(tables.covers.create, (error) => 
 {
     // If there was an error, log it and exit the process, this is fatal.
-    if (err)
+    if (error)
     {
-        console.log("Error creating covers table:\n", err);
-        process.exit(1);
+        console.log("Error creating covers table:\n", error);
+        dialog.showErrorBox('Error', 'Could not create covers table.') ;
+        app.quit();
     }
 });
 
