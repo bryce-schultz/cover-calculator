@@ -1,4 +1,0 @@
-function getCustomer(id)
-{
-    
-}

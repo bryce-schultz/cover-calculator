@@ -29,17 +29,17 @@ export class Customer
     getInfo()
     {
         return (
-                <div className="customer-info">
-                    {
-                        this.first_name !== "" && 
-                        <>
-                            <div>{this.first_name} {this.last_name}</div>
-                            <div>{this.address}</div>
-                            <div>{this.city}, {this.state} {this.zipcode}</div>
-                            <div>{this.email}</div>
-                        </>
-                    }
-                </div>
+            <div className="customer-info">
+                {
+                    this.first_name !== "" && 
+                    <>
+                        <div>{this.first_name} {this.last_name}</div>
+                        <div>{this.address}</div>
+                        <div>{this.city}, {this.state} {this.zipcode}</div>
+                        <div>{this.email}</div>
+                    </>
+                }
+            </div>
         );
     }
 
@@ -64,7 +64,7 @@ export class Cover
         this.in_ground = in_ground;
         this.purchase_date = new Date();
 
-        // bind draw method to this object
+        // bind draw method to this object to avoid js being js.
         this.draw = this.draw.bind(this);
     }
 
@@ -78,8 +78,6 @@ export class Cover
     draw(svg, width, height)
     {
         if (svg === undefined) return;
-
-        console.log(this);
 
         drawLine(svg, 0, 0, width, height);
         drawLine(svg, 0, height, width, 0);

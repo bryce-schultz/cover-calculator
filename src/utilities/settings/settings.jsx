@@ -13,6 +13,7 @@ export const getSettings = () =>
     if (settings === null)
     {
         settings = defaultSettings;
+        saveSettings(settings);
     }
     
     return settings;

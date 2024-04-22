@@ -40,7 +40,7 @@ export default function OpenExisting()
       />
     );
 
-      setListItems(items);
+    setListItems(items);
   };
 
   useEffect(()=>{

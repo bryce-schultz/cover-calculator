@@ -2,13 +2,14 @@ import
 { 
     cover_table
 } from "../../constants/tables";
-
 import { formatDate } from '../formatters/format_date';
-
 import { getCustomerId } from './add_customer';
+import sendAsync from './ipc';
 
-import sendAsync from './renderer';
-
+//***********************************************
+// addCover
+//
+// Adds a cover to the database.
 export async function addCover(customer, cover)
 {
     const id = await getCustomerId(customer);
@@ -20,7 +21,20 @@ function insertCover(id, cover)
     const query = 
     'INSERT INTO ' + 
     cover_table + 
-    '(customer_id, purchase_date, type, model, length, width, corner_radius, panel_count, radius, size_difference, color, airs, in_ground) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);';
+    '(customer_id,              \
+      purchase_date,            \
+      type,                     \
+      model,                    \
+      length,                   \
+      width,                    \
+      corner_radius,            \
+      panel_count,              \
+      radius,                   \
+      size_difference,          \
+      color,                    \
+      airs,                     \
+      in_ground)                \
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);';
 
     const args = 
     [

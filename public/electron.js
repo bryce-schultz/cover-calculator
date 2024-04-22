@@ -1,7 +1,9 @@
 const path = require('path');
-
 const { app, BrowserWindow } = require('electron');
 const isDev = require('electron-is-dev');
+const { ipcMain } = require('electron');
+const sqlite3 = require('sqlite3').verbose();
+const fs = require('fs');
 
 const icon_path = path.join(__dirname, 'favicon.ico');
 
@@ -65,6 +67,62 @@ const app_data_path =
 const database_path = app_data_path + '/cover-calculator/Sqlite/';
 const database_file = database_path + 'database.db';
 
+if (!fs.existsSync(database_path))
+{
+    console.log("Database path " 
+    + database_path + 
+    " didn't exist, creating it now.");
+
+    fs.mkdirSync(database_path, { recursive: true });
+}
+
+const database = new sqlite3.Database(database_file);
+
+ipcMain.on('db-query', (event, {query, params}) => 
+{
+    database.all(query, params, (error, rows) =>
+    {
+        if (error)
+        {
+            event.reply('db-error', error);
+            return;
+        }
+
+        event.reply('db-reply', rows);
+    });
+});
+
+//***********************************************
+// This SQL command inserts a test user into the database.
+// It is only used for testing purposes.
+//
+const insert_test_user = 
+'INSERT OR REPLACE INTO customers (\
+    zipcode,\
+    state,\
+    city,\
+    address,\
+    email,\
+    last_name,\
+    first_name,\
+    id\
+)\
+VALUES (\
+    97502,\
+    \'OR\',\
+    \'Central Point\',\
+    \'557 Blue Heron Dr.\',\
+    \'bryceschultz@live.com\',\
+    \'Schultz\',\
+    \'Bryce\',\
+    0 \
+);';
+
+//***********************************************
+// This object represents the tables in the database.
+// It has a create property that contains the SQL to create the table.
+// Future: add additional properties for easy access to other SQL commands.
+//
 const tables = 
 {
     customers: 
@@ -103,58 +161,26 @@ const tables =
     }
 }
 
-const { ipcMain } = require('electron');
-const sqlite3 = require('sqlite3').verbose();
-
-// create the database folder
-const fs = require('fs');
-
-if (!fs.existsSync(database_path))
+// Create the tables if they don't exist.
+database.exec(tables.customers.create, (err) => 
 {
-    console.log("Database path " 
-    + database_path + 
-    " didn't exist, creating it now.");
-
-    fs.mkdirSync(database_path, { recursive: true });
-}
-
-const database = new sqlite3.Database(database_file);
-
-ipcMain.on('db-query', (event, {query, params}) => 
-{
-    console.log("Received query:", query, params);
-    database.all(query, params, (err, rows) =>
+    // If there was an error, log it and exit the process, this is fatal.
+    if (err)
     {
-        console.log("Result:", rows);
-        event.reply('db-reply', rows);
-    });
+        console.log("Error creating customers table:\n", err);
+        process.exit(1);
+    }
 });
 
-const insert_test_user = 
-'INSERT OR REPLACE INTO customers (\
-    zipcode,\
-    state,\
-    city,\
-    address,\
-    email,\
-    last_name,\
-    first_name,\
-    id\
-)\
-VALUES (\
-    97502,\
-    \'OR\',\
-    \'Central Point\',\
-    \'557 Blue Heron Dr.\',\
-    \'bryceschultz@live.com\',\
-    \'Schultz\',\
-    \'Bryce\',\
-    0 \
-);';
+database.exec(tables.covers.create, (err) => 
+{
+    // If there was an error, log it and exit the process, this is fatal.
+    if (err)
+    {
+        console.log("Error creating covers table:\n", err);
+        process.exit(1);
+    }
+});
 
-// Create the tables if they don't exist.
-database.exec(tables.customers.create);
-database.exec(tables.covers.create);
-
-// Insert a test user and cover.
-database.exec(insert_test_user);
+// Insert a test user.
+// database.exec(insert_test_user);

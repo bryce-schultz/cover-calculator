@@ -5,9 +5,9 @@ import
 
 import { query_limit } from "../../constants/limits";
 
-import sendAsync from './renderer';
+import sendAsync from './ipc';
 
-export default function getCustomers(name)
+export default async function getCustomers(name)
 {
     const query = 
     'SELECT * FROM ' +
@@ -17,10 +17,12 @@ export default function getCustomers(name)
     let args = [name, query_limit];
 
     let customers = 
-    sendAsync(query, args)
-    .then
-    (
+    await sendAsync(query, args)
+    .then(
         (result) => {return result}
+    )
+    .catch(
+        (error) => {console.error(error)}
     );
 
     return customers;
@@ -37,9 +39,11 @@ export async function getCustomersByFirstName(first_name)
 
     let customers = 
     await sendAsync(query, args)
-    .then
-    (
+    .then(
         (result) => {return result}
+    )
+    .catch(
+        (error) => {console.error(error)}
     );
 
     return customers;

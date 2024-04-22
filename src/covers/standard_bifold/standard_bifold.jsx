@@ -95,11 +95,12 @@ export class StandardBifoldCover extends RectangularCover
 
         const bubble_thickness = 0.125;
         const double_bubble_thickness = 0.25;
+        const default_size_difference = 3.5;
 
         const frame_length = this.length - (2 * bubble_thickness + 2 * double_bubble_thickness);
         const frame_width = this.width - (2 * double_bubble_thickness);
 
-        const size_difference = this.size_difference + (3.5 / 2);
+        const size_difference = this.size_difference + (default_size_difference / 2);
 
         const scale = Math.min(width / frame_length, height / frame_width);
 

@@ -3,8 +3,15 @@ import
     customer_table
 } from "../../constants/tables";
 
-import sendAsync from './renderer';
+import sendAsync from './ipc';
 
+//***********************************************
+// addCustomer
+//
+// Adds a customer to the database.
+// If the customer already exists, update the customer.
+// Customer is identified by email.
+//
 export async function addCustomer(customer)
 {
     if (customer.email === '') 
@@ -28,6 +35,11 @@ export async function addCustomer(customer)
     }
 }
 
+//***********************************************
+// updateCustomer
+//
+// Update the customer in the database.
+//
 function updateCustomer(customer)
 {
     const query = 
@@ -48,14 +60,21 @@ function updateCustomer(customer)
 
     let result = 
     sendAsync(query, args)
-    .then
-    (
+    .then(
         (result) => {return result}
+    )
+    .catch(
+        (error) => {console.error(error)}
     );
 
     return result;
 }
 
+//***********************************************
+// insertCustomer
+//
+// Insert the customer into the database.
+//
 function insertCustomer(customer)
 {
     const query = 
@@ -76,14 +95,21 @@ function insertCustomer(customer)
 
     let result = 
     sendAsync(query, args)
-    .then
-    (
+    .then(
         (result) => {return result}
+    )
+    .catch(
+        (error) => {console.error(error)}
     );
 
     return result;
 }
 
+//***********************************************
+// customerExists
+//
+// Check if the customer exists in the database.
+//
 async function customerExists(customer)
 {
     const query =
@@ -98,9 +124,11 @@ async function customerExists(customer)
 
     let result =
     await sendAsync(query, args)
-    .then
-    (
+    .then(
         (result) => {return result}
+    )
+    .catch(
+        (error) => {console.error(error)}
     );
 
     const key = 'count(id)';
@@ -108,6 +136,11 @@ async function customerExists(customer)
     return (result[0][key] === 0 ? false : true);
 }
 
+//***********************************************
+// getCustomerId
+//
+// Get the customer id from the database.
+//
 export async function getCustomerId(customer)
 {
     const query =
@@ -122,13 +155,14 @@ export async function getCustomerId(customer)
 
     let result =
     await sendAsync(query, args)
-    .then
-    (
+    .then(
         (result) => {return result}
+    )
+    .catch(
+        (error) => {console.error(error)}
     );
 
     const key = 'id';
-    console.log(customer, result[0]);
     if (result[0] === undefined) return null;
     return result[0][key];
 }
