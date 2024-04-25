@@ -14,6 +14,7 @@ import { addCover } from '../../utilities/database/add_cover';
 
 import './build_sheet.css';
 import SVGCanvas from '../../components/canvas/svgcanvas';
+import { useNav } from '../../utilities/nav';
 
 
 // customer resolver
@@ -64,6 +65,8 @@ export default function BuildSheet()
     const [scale, setScale] = useState(Number(retrieve('scale')) || 100);
     const notesRef = useRef(null);
     const successToastRef = useRef(null);
+
+    const nav = useNav();
 
     const cover = getCover();
     const customer = getCustomer();
@@ -157,13 +160,19 @@ export default function BuildSheet()
                         add
                     </span>
                 </TopbarButton>
+
+                <TopbarButton onClick={() => {nav('/')}} tooltip="Zoom Out">
+                    <span className="material-symbols-outlined">
+                        home
+                    </span>
+                </TopbarButton>
             </Topbar>
 
             <div id='page-content'>
                 <div id='paper-wrapper'>
                     <div id='build-sheet-paper' style={{transform: `scale(${scale/100})`, transformOrigin: 'top center'}}>
                         <div id='build-sheet-header' className='mb-3'>
-                            <div><h1>Coverplay</h1><h2>Spa Covers</h2></div>
+                            <div><h1>Airframe</h1><h2>Spa Covers</h2></div>
                             {customer !== null && customer.getInfo()}
                         </div>
                         <div id='build-sheet-info'>
