@@ -14,6 +14,6 @@ In the project directory, you can run:
 
 Runs the app in the development mode.
 
-### `npm run build`
+### `npm run package`
 
 Builds the project for Windows as a packed and unpacked application.
